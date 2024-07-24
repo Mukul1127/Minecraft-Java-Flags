@@ -1,4 +1,4 @@
-## Minecraft Java Flags
+### Minecraft Java Flags
 Welcome! this is a WIP guide to tune Java for maximum performance in Minecraft.
 
 Discord for questions and such: https://discord.gg/zeFSR9PnUw, also feel free to make an issue.
