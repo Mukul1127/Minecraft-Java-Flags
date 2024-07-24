@@ -67,3 +67,149 @@ And for Platform Prime, usually no tuning with special flags is necessary, Large
 > -XX:+UnlockExperimentalVMOptions -XX:+UnlockDiagnosticVMOptions -XX:+AlwaysActAsServerClassMachine -XX:+ParallelRefProcEnabled -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:+AggressiveOpts -XX:+UseFastAccessorMethods -XX:AllocatePrefetchStyle=1 -XX:ThreadPriorityPolicy=1 -XX:+UseDynamicNumberOfGCThreads -XX:NmethodSweepActivity=1 -XX:ReservedCodeCacheSize=350M -XX:-DontCompileHugeMethods -XX:MaxNodeLimit=240000 -XX:NodeLimitFudgeFactor=8000 -XX:+UseFPUForSpilling -XX:+EnableJVMCI -XX:+UseJVMCICompiler -XX:+EagerJVMCI -Dgraal.TuneInlinerExploration=1 -Dgraal.CompilerConfiguration=enterprise -Dgraal.UsePriorityInlining=true -Dgraal.Vectorization=true -Dgraal.OptDuplication=true -Dgraal.DetectInvertedLoopsAsCounted=true -Dgraal.LoopInversion=true -Dgraal.VectorizeHashes=true -Dgraal.EnterprisePartialUnroll=true -Dgraal.VectorizeSIMD=true -Dgraal.StripMineNonCountedLoops=true -Dgraal.SpeculativeGuardMovement=true -Dgraal.InfeasiblePathCorrelation=true
 > ```
 > Be sure to set `-Dgraal.VectorizeSIMD` to `false` if you run shaders.
+> This old version also breaks constellation rendering in 1.16.5 Astral Sorcery. This is possibly related to the shader bug. See: https://github.com/HellFirePvP/AstralSorcery/issues/1963
+
+
+# Garbage Collection
+
+**Garbage collection flags should be added to Minecraft servers and clients**, as the default "pauses" to stop and collect garbage manifest as stutters on the client and lag on servers. Use the `/sparkc gcmonitor` command in Spark to observe pauses in-game. *Any* old generation pauses are bad, and young generation G1GC collections should be infrequent, but short enough to be imperceptible.  
+
+<br />
+
+### Non-Proactive ZGC 
+
+Non-Proactive ZGC is great for high memory/high core count servers. It has no server throughput hit I can measure, and absolutely does not stutter. However, it requires more RAM and more cores than other garbage collectors. Enable it with
+```
+-XX:+UseZGC -XX:AllocatePrefetchStyle=1 -XX:-ZProactive
+```
+
+> Note: It has a significant client FPS hit.
+
+> Note: Non-Proactive ZGC is unavailable in Java 8 and much less performant in Java 11 than it is in Java 17+.
+
+> Note: Allocate more RAM and more `ConcGCThreads` than you normally would for other GC.
+
+> Note: ZGC does not play well with `AllocatePrefetchStyle=3`, hence setting it to 1 overrides the previous entry. Remove the old one if you want.
+
+<br/>
+
+### Generational ZGC (New and not well tested!)
+
+Generational ZGC is new, so no one has really tested it, though I would assume it's similar to Proactive ZGC, except it also apparently runs well-ish on clients? Enable it with
+```
+-XX:+UseZGC -XX:AllocatePrefetchStyle=1 -XX:+ZGenerational
+```
+
+> Note: Generational ZGC is only available in Java 21+
+
+> Note: Allocate more RAM and more `ConcGCThreads` than you normally would for other GC.
+
+> Note: ZGC does not like `AllocatePrefetchStyle=3`, hence setting it to 1 overrides the previous entry. Remove the old one if you want.
+
+<br/>
+
+### Shenandoah
+
+Shenandoah performs well on clients, but kills server throughput. Enable it with 
+```
+-XX:+UseShenandoahGC -XX:ShenandoahGCMode=iu -XX:ShenandoahGuaranteedGCInterval=1000000 -XX:AllocatePrefetchStyle=1
+```
+
+See more tuning options [here](https://wiki.openjdk.org/display/shenandoah/Main). The "herustic" and "mode" options don't change much (except for "compact," which you should not use). 
+
+> Note: Red Hat OpenJDK 8 is the only Java 8 that supports Shenandoah.
+
+> Note: Shenandoah does not like `AllocatePrefetchStyle=3`, hence setting it to 1 overrides the previous entry. Remove the old one if you want.
+
+<br/>
+
+### Client G1GC
+
+G1GC is the default garbage collector for all JREs. Aikar's [famous Minecraft server G1GC arguments](https://aikar.co/2018/07/02/tuning-the-jvm-g1gc-garbage-collector-flags-for-minecraft/) run great on clients, with two caveats: they effectively [clamp](https://www.oracle.com/technical-resources/articles/java/g1gc.html) the `MaxGCPauseMillis` parameter by setting `G1NewSizePercent` so high, producing long stutters on some clients, and they collect oldgen garbage too aggressively (as the client produces *far* less than a populated server). 
+
+These are similar to the Aikar flags, but with shorter, more frequent pauses, less aggressive G1 mixed collection and more aggressive background collection: 
+```
+-XX:+UseG1GC -XX:MaxGCPauseMillis=37 -XX:+PerfDisableSharedMem -XX:G1HeapRegionSize=16M -XX:G1NewSizePercent=23 -XX:G1ReservePercent=20 -XX:SurvivorRatio=32 -XX:G1MixedGCCountTarget=3 -XX:G1HeapWastePercent=20 -XX:InitiatingHeapOccupancyPercent=10 -XX:G1RSetUpdatingPauseTimePercent=0 -XX:MaxTenuringThreshold=1 -XX:G1SATBBufferEnqueueingThresholdPercent=30 -XX:G1ConcMarkStepDurationMillis=5.0 -XX:GCTimeRatio=99 -XX:G1ConcRefinementServiceIntervalMillis=150 -XX:G1ConcRSHotCardLimit=16
+```
+
+> NOTE: Java 21 removed support for the `G1ConcRefinementServiceIntervalMillis` flag and the `-XX:G1ConcRSHotCardLimit=16` flag. Remove them if you want.
+
+> Note: `G1NewSizePercent` and `MaxGCPauseMillis` can be used to tune the frequency/dureation of your young generation collections. `G1HeapWastePercent=18` should be removed if you are getting any old generation pauses on your setup. Alternatively, you can raise it and set `G1MixedGCCountTarget` to 2 or 1 to make mixed garbage collection even lazier (at the cost of higher memory usage). 
+
+<br/>
+
+### Server G1GC
+
+Longer pauses are more acceptable on servers. These flags are very close to the aikar defaults:
+
+```
+-XX:+UseG1GC -XX:MaxGCPauseMillis=130 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=28 -XX:G1HeapRegionSize=16M -XX:G1ReservePercent=20 -XX:G1MixedGCCountTarget=3 -XX:InitiatingHeapOccupancyPercent=10 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=0 -XX:SurvivorRatio=32 -XX:MaxTenuringThreshold=1 -XX:G1SATBBufferEnqueueingThresholdPercent=30 -XX:G1ConcMarkStepDurationMillis=5 -XX:G1ConcRefinementServiceIntervalMillis=150 -XX:G1ConcRSHotCardLimit=16
+```
+
+> NOTE: Java 21 removed support for the `G1ConcRefinementServiceIntervalMillis` flag and the `-XX:G1ConcRSHotCardLimit=16` flag. Remove them if you want.
+
+<br/>
+
+### Garbage Collection Threading
+
+`-XX:ConcGCThreads=[Some Number]` controls the [*maximum* number](https://github.com/openjdk/jdk/blob/dd34a4c28da73c798e021c7473ac57ead56c9903/src/hotspot/share/gc/z/zHeuristics.cpp#L96-L104) of background threads the garbage collector is allowed to use, and defaults to `number of logical (hyperthreaded) cores / 4`. Recent versions of Java will [reduce the number of gc threads, if needed](https://wiki.openjdk.org/display/zgc/Main#Main-SettingConcurrentGCThreads).
+
+In some cases (especially with ZGC or Shenandoh) you want to increase this thread cap past the default. I recommend `[number of REAL (non-hyperthreaded) cores - 2]` on most CPUs, but you may need to play with this parameter. If its too low, garbage collection can't keep up with Minecraft, and the game will stutter and/or start eating gobs of RAM and crash. If its too high, it might slow the game down, especially if you are running Java 8. 
+
+No other "threading" flags like `ParallelGCThreads` or `JVMCIThreads` are necessary.
+
+<br/>
+
+# Large Pages
+Enabling large pages improves the performance of Minecraft servers and clients by reducing the load on your system. Here's a good guide: https://kstefanj.github.io/2021/05/19/large-pages-and-java.html
+
+> Note: Windows 10 Home doesn't have `gpedit.msc` and thus, can't follow the guide above, intead use this guide: https://awesomeprojectsxyz.blogspot.com/2017/11/windows-10-home-how-to-enable-lock.html?m=1, also you have to download the tool from here: https://gist.github.com/eyecatchup/0107bab3d92473cb8a3d3547848fc442
+
+> Note: On Windows, you **must** run Java and your launcher as an administrator. This is a security risk, and you should skip this section if you aren't comfortable with that. That means checking the "run as administrator" compatibility checkbox for `javaw.exe`, `java.exe` and `your launcher.exe`, otherwise Large Pages will silently fail.
+
+> Note: On Linux, you generally want to use `-XX:+UseTransparentHugePages`. To have the kernel automatically allocate memory instead (for a bigger performance boost). Azul has a good guide located [here](https://docs.azul.com/prime/Enable-Huge-Pages)
+
+Check and see if large pages is working with the `-Xlog:gc+init` java argument in Java 17. 
+
+In any Java version/platform, if large pages isn't working, you will get a warning in the log similar to this: 
+
+`Java HotSpot(TM) 64-Bit Server VM warning: JVM cannot use large page memory because it does not have enough privilege to lock pages in memory.`
+
+<br/>
+
+# SpecialK
+A "universal" Windows mod akin to [ReShade](https://reshade.me/), SpecialK has 2 major performance benefits:
+
+- A "smart" frame limiter that reduces stutter, eliminates tearing, saves power, and saves CPU TDP to boost when needed. It even works in conjuction with VRR or Nvidia Reflex. 
+
+- A OpenGL-to-DirectX11 wrapper called OpenGL-IK that eliminates Minecraft's windowed mode overhead, and enables other features (like auto-HDR or a resizable borderless window).
+
+Download it here: https://wiki.special-k.info/en/SpecialK/Tools
+
+Add your Minecraft launcher, and check the "elevated service" checkbox. Then navigate to your java bin folder where your javaw.exe is, and create an empty file called `SpecialK.OpenGL32`. Launch your Minecraft launcher with the SpecialK launcher, and the launcher will then "inject" SpecialK into Minecraft.
+![SpecialK](Tutorial_Images/specialk.PNG)
+
+You can create a desktop shortcut to your Minecraft launcher through the SpecialK UI for even more convenience. 
+
+Be sure to turn off VSync and the in-game Minecraft frame limiter.
+
+<br />
+
+# Process Priority
+After launching Minecraft, set Java to run at an "Above Normal" process priority in Windows with the Task Manager in the details tab:
+
+![taskmanager](Tutorial_Images/taskmon.PNG)
+
+Linux users can add  `sudo nice -n -10` to the beginning of the launch command.
+
+> Note: nice levels below 0 (with the "max" being -20) require running Minecraft as `sudo`. Alternatively, use the `renice` command after launching Minecraft to avoid this security risk.
+
+<br/>
+
+# Performance Mods
+
+This is a **fantastic** repo for finding performance mods: https://github.com/TheUsefulLists/UsefulMods
+
+Instead of OptiFine, I would recommend more compatible alternatives like [Sodium](https://modrinth.com/mod/sodium) or [Embeddium](https://modrinth.com/mod/embeddium) + [Iris](https://modrinth.com/mod/iris) for Fabric/Quilt and [Embeddium](https://modrinth.com/mod/embeddium) or [Rubidium](https://modrinth.com/mod/rubidium) + [Oculus](https://modrinth.com/mod/oculus) for Forge/NeoForge. Please note that there are other optimization mods.
+
+<br/>
