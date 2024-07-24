@@ -32,3 +32,15 @@ While any Java Distributor will work just fine, you may run into compatibility i
 | 1.17 to 1.20.4     | Requires Java 17+ | Requires Java 17+  |
 | 1.16               | Requires Java 8+  | May Require Java 8 |
 | 1.15 and below     | Only Java 8       | Only Java 8        |
+
+Memory Allocation
+======
+Minimum and maximum memory flags (`-xms` and `-xmx`) should be set to the same value as explained here: https://dzone.com/articles/benefits-of-setting-initial-and-maximum-memory-siz with one caveat: if you are on a low-memory system, and Minecraft takes up almost all your RAM, set your minimum memory below your maximum memory to conserve as much as possible.
+
+Sizes are set in megabytes or gigabytes so `-Xms4096M` or `-Xmx8G` are both correct.
+
+> Note: Allocating too much memory can break garbage collection or just slow Minecraft down, even if you have plenty to spare. Allocating too little can also slow down or break the game. Keep a close eye on Task manager (or your DE's system monitor) as Minecraft is running, and allocate only as much as it needs (which is usually less than 8G). `sparkc gcmonitor` will tell you if your allocation is too high (the pauses will be too long) or too low (frequent GC with a low memory warning in the notification).
+
+> Note: If you are using a third-party Minecraft launcher like Prism Launcher or ATLauncher, you shouldn't use memory arguments and instead control memory through the dedicated section in the launcher.
+
+<br/>
