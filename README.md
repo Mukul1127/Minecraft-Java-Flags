@@ -19,7 +19,7 @@ Java runtimes from Azul or Microsoft, Adoptium, Amazon and so on are all basical
 
 - **OpenJ9** - Consumes less memory at the cost of being *much* slower in Minecraft. It also uses totally different flags than any other Java build. This option is unrecommended
 
-If you dont know what to pick, I recommend GraalVM or Adoptium.
+If you dont know what to pick, I recommend GraalVM or Adoptium. You can download most of the good OpenJDK based ones from [here](https://adoptium.net/marketplace/), and you can download GraalVM from [here](https://www.graalvm.org/downloads/).
 
 <br />
 
