@@ -34,7 +34,12 @@ While any Java Distributor will work just fine, you may run into compatibility i
 | 1.15 and below     | Only Java 8       | Only Java 8        |
 
 # Memory Allocation
-Minimum and maximum memory flags (`-xms` and `-xmx`) should be set to the same value as explained here: https://dzone.com/articles/benefits-of-setting-initial-and-maximum-memory-siz with one caveat: if you are on a low-memory system, and Minecraft takes up almost all your RAM, set your minimum memory below your maximum memory to conserve as much as possible.
+Minimum and maximum memory flags (`-xms` and `-xmx`) should be set to the same value as explained here: https://dzone.com/articles/benefits-of-setting-initial-and-maximum-memory-siz with one caveat: if you are on a low-memory system, and Minecraft takes up almost all your RAM, set your minimum memory below your maximum memory to conserve as much as possible. Also try removing these arguments:
+```
+-XX:NmethodSweepActivity=1 -XX:ReservedCodeCacheSize=400M -XX:NonNMethodCodeHeapSize=12M -XX:ProfiledCodeHeapSize=194M -XX:NonProfiledCodeHeapSize=194M
+```
+ and try server garbage collection arguments.
+
 
 Sizes are set in megabytes or gigabytes so `-Xms4096M` or `-Xmx8G` are both correct.
 
@@ -213,3 +218,56 @@ This is a **fantastic** repo for finding performance mods: https://github.com/Th
 Instead of OptiFine, I would recommend more compatible alternatives like [Sodium](https://modrinth.com/mod/sodium) or [Embeddium](https://modrinth.com/mod/embeddium) + [Iris](https://modrinth.com/mod/iris) for Fabric/Quilt and [Embeddium](https://modrinth.com/mod/embeddium) or [Rubidium](https://modrinth.com/mod/rubidium) + [Oculus](https://modrinth.com/mod/oculus) for Forge/NeoForge. Please note that there are other optimization mods.
 
 <br/>
+
+# Other Performance Tips
+- Run your Minecraft on Linux! In pretty much every scenario it runs very good, for servers, Clear Linux and RHEL are very well optimized, and for clients, CachyOS and EndeavorOS are amazing.
+
+- Make sure the Minecraft client is using your discrete GPU! Check the F3 tab, and force Minecraft to use it in the "**Windows Graphics Settings**", *not* the AMD/Nvidia control panel (as they don't seem to work anymore).
+
+- Minecraft client Linux users should research running Minecraft natively on wayland if you use it.
+
+- Close everything in the background, including Discord, game launchers and your browser! Minecraft is resource intensive, and does not like other apps generating CPU interrupts or eating disk I/O, RAM and so on.
+
+- Server owners can check this out: [YouHaveTrouble/minecraft-optimization](https://github.com/YouHaveTrouble/minecraft-optimization).
+
+<br/>
+
+
+# Flag Explanations
+- Aikar G1GC flags are explained here: https://aikar.co/2018/07/02/tuning-the-jvm-g1gc-garbage-collector-flags-for-minecraft/
+- `-XX:+UnlockExperimentalVMOptions -XX:+UnlockDiagnosticVMOptions` simply unlock more flags to be used. These can be listed with the `-XX:+PrintFlagsFinal` and `-XX:+JVMCIPrintProperties` flags, see [Flag Dumps](Flag_Dumps)
+- `-XX:G1MixedGCCountTarget=3`: This is how many oldgen GC blocks to target in "mixed" GC. These mixed collections are much slower, and the Minecraft client doesn't generate oldgen very quickly, so we can lower this value to 3, 2, or even 1 for shorter GC pauses.
+- `-XX:-DontCompileHugeMethods` *Allows* huge methods to be compiled. Modded Minecraft has some of these, and we don't care about higher background compiler CPU usage.
+- `-XX:MaxNodeLimit=240000 -XX:NodeLimitFudgeFactor=8000` Enable optimization of larger methods. See: https://bugs.java.com/bugdatabase/view_bug.do?bug_id=8058148
+- `-XX:ReservedCodeCacheSize=400M -XX:NonNMethodCodeHeapSize=12M -XX:ProfiledCodeHeapSize=194M -XX:NonProfiledCodeHeapSize=194M` reserves more space for compiled code. All sections must "add up" to `ReservedCodeCacheSize`. I have observed modded Minecraft run into the default 250 megabyte limit with `XX:+PrintCodeCache`, but even if its not filled, the larger size makes eviction of compiled code less aggressive. 
+- `-XX:NmethodSweepActivity=1` (default 10) keeps "cold" code in the cache for a longer time. There is no risk of "filling up" the code cache either, as cold code is more aggressively removed as it fills up. 
+- ~~`-XX:+UseStringDeduplication`~~ This is a popular option, but not used here, as it's benching slower. Maybe its useful on low memory systems?  
+- `-XX:+UseFastUnorderedTimeStamps` Avoid system calls for getting the time. The impact of this will vary per system, but we aren't really concerned with logging timestamp accuracy. 
+- `-XX:+UseCriticalJavaThreadPriority` *Nothing* should preempt the Minecraft threads. GC and Compiler threads can wait. 
+- `-XX:ThreadPriorityPolicy=1` Use a wider range of thread priorities. Requires sudo on linux to work. Some JDKs (like Graal) enable this by default, but some don't.
+- `-XX:G1SATBBufferEnqueueingThresholdPercent=30 -XX:G1ConcMarkStepDurationMillis=5 -XX:G1ConcRefinementServiceIntervalMillis=150`: Optimizes G1GC's concurrent collection threads, still being tested: https://research.spec.org/icpe_proceedings/2014/p111.pdf
+- `-XX:G1RSetUpdatingPauseTimePercent=0`: We want *all* this work to be done in the G1GC concurrent threads, not the pauses. 
+- `-XX:G1HeapWastePercent=18` Don't bother collecting from old gen until its above this percent. This avoids triggering slower "mixed" young generation GCs, which is fine since Minecraft (with sufficient memory) doesn't fill the old gen that fast. Idea from: https://www.reddit.com/r/Minecraft/comments/k9zb7m/tuning_jvm_gc_for_singleplayer/
+- `-XX:GCTimeRatio=99` As a goal, 1% of CPU time should be spent on garbage collection. Default is 12, which seems way too low. The default for Java 8 was 99.
+- `-XX:AllocatePrefetchStyle=3` Generate one prefetch instruction per cache line. More aggressive prefetching is generally useful on newer CPUs with large caches. It seems to break ZGC. See: https://github.com/openjdk/jdk/blob/bd90c4cfa63ba2de26f7482ed5d1704f9be9629f/src/hotspot/share/opto/macro.cpp#L1806
+- `-Dgraal.LoopRotation=true` A non default optimization, will probably be default soon. 
+- `-Dgraal.TuneInlinerExploration=1` Spend more time making inlining decisions. For Minecraft, we want the C2 compiler to be as slow and aggressive as possible. 
+- Most other `-Dgraal` arguments are enabled by default, and are either there as a sanity check, for debugging or as a failsafe (if, for instance, someone unknowingly disables JVCMI with some other flag). 
+- Many Java 8 flags (such as `-XX:MaxInlineLevel=15 -XX:MaxVectorSize=32`) are just copied from the Java 17 defaults. Others (like `+AggressiveOpts`) are only non-default in some older Java 8 builds.
+
+<br />
+
+# Unmentioned Sources:
+- Updated Aikar flags from this repo: https://github.com/etil2jz/etil-minecraft-flags
+- Reddit post from a Forge dev: https://www.reddit.com/r/feedthebeast/comments/5jhuk9/modded_mc_and_memory_usage_a_history_with_a/
+- Red Hat's optimization guide: https://www.redhat.com/en/blog/optimizing-rhel-8-run-java-implementation-minecraft-server
+- GraalVM release notes: https://www.graalvm.org/release-notes/
+- Oracle's Java 17 Documentation: https://docs.oracle.com/en/java/javase/17/docs/specs/man/java.html
+- VM Options explorer: https://chriswhocodes.com/
+- Java itself, via the `-XX:+PrintFlagsFinal` and the `-XX:+JVMCIPrintProperties` flags to dump flag descriptions/defaults. 
+- OpenJDK source: https://github.com/openjdk/jdk/
+- Testing from @keyboard.tn in Discord.
+- https://research.spec.org/icpe_proceedings/2014/p111.pdf
+- https://www.diva-portal.org/smash/get/diva2:1466940/FULLTEXT01.pdf
+- https://malloc.se/blog/zgc-jdk17
+- https://docs.oracle.com/javase/8/embedded/develop-apps-platforms/codecache.htm
