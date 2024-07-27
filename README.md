@@ -238,6 +238,13 @@ Instead of OptiFine, I would recommend more compatible alternatives like [Sodium
 
 <br/>
 
+# FAQ
+
+- Java tweaks improve server performance and client stuttering, but they don't boost average client FPS much (if at all). For that, running [correct/up-to-date graphics drivers](https://github.com/CaffeineMC/sodium-fabric/wiki/Driver-Compatibility) and [performance mods](https://github.com/TheUsefulLists/UsefulMods) is far more important.
+
+- IBM's OpenJ9 does indeed save RAM, as its reputation would suggest, but is over 30% slower at server chunkgen in my tests. If there are any flags that make it competitive with OpenJDK, please let me know on Discord or make a issue.
+
+<br/>
 
 # Flag Explanations
 - Aikar G1GC flags are explained here: https://aikar.co/2018/07/02/tuning-the-jvm-g1gc-garbage-collector-flags-for-minecraft/
