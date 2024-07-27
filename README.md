@@ -8,9 +8,11 @@
 
 Welcome! this is a guide to tune Java for Minecraft.
 
-> Note: While these tweaks notably reduce some server and client stutters, expect only modest TPS gains + minimal FPS gains at best, and somewhat increased RAM + CPU usage.
+> [!NOTE]
+> While these tweaks notably reduce some server and client stutters, expect only modest TPS gains + minimal FPS gains at best, and somewhat increased RAM + CPU usage.
 
-> Note: While these flags are easy to copy-paste and forget, they are no substitute for clearing laggy things out with mods like Spark.
+> [!NOTE]
+> While these flags are easy to copy-paste and forget, they are no substitute for clearing laggy things out with mods like Spark.
 
 <br />
 
@@ -52,9 +54,11 @@ Minimum and maximum memory flags (`-xms` and `-xmx`) should be set to the same v
 
 Sizes are set in megabytes or gigabytes so `-Xms4096M` or `-Xmx8G` are both correct.
 
-> Note: Allocating too much memory can break garbage collection or just slow Minecraft down, even if you have plenty to spare. Allocating too little can also slow down or break the game. Keep a close eye on Task manager (or your DE's system monitor) as Minecraft is running, and allocate only as much as it needs (which is usually less than 8G). `sparkc gcmonitor` will tell you if your allocation is too high (the pauses will be too long) or too low (frequent GC with a low memory warning in the notification).
+> [!NOTE]
+> Allocating too much memory can break garbage collection or just slow Minecraft down, even if you have plenty to spare. Allocating too little can also slow down or break the game. Keep a close eye on Task manager (or your DE's system monitor) as Minecraft is running, and allocate only as much as it needs (which is usually less than 8G). `sparkc gcmonitor` will tell you if your allocation is too high (the pauses will be too long) or too low (frequent GC with a low memory warning in the notification).
 
-> Note: If you are using a third-party Minecraft launcher like Prism Launcher or ATLauncher, you shouldn't use memory arguments and instead control memory through the dedicated section in the launcher.
+> [!NOTE]
+> If you are using a third-party Minecraft launcher like Prism Launcher or ATLauncher, you shouldn't use memory arguments and instead control memory through the dedicated section in the launcher.
 
 <br/>
 
@@ -76,12 +80,14 @@ And for OpenJ9, use the flags below instead:
 -XX:+IdleTuningGcOnIdle -XX:+UseAggressiveHeapShrink -XX:-OmitStackTraceInFastThrow -XX:+UseFastAccessorMethods -XX:+OptimizeStringConcat -Xshareclasses:allowClasspaths -Xshareclasses:cacheDir=./cache -Xaot -XX:+UseCompressedOops -XX:ObjectAlignmentInBytes=256 -Xshareclasses -XX:SharedCacheHardLimit=800M -Xtune:virtualized -XX:+TieredCompilation -XX:InitialTenuringThreshold=5 -Dlog4j2.formatMsgNoLookups=true -XX:-DisableExplicitGC -XX:InitiatingHeapOccupancyPercent=35 -XX:+UnlockExperimentalVMOptions -XX:MaxGCPauseMillis=6 -Djava.net.preferIPv4Stack=true -XX:-ParallelRefProcEnabled-XX:+UseTLAB -XX:ReservedCodeCacheSize=70M -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20
 ```
 
-> Note: I *hightly* recommend not using Java 8 unless it is neccesary, but if it is, these flags will work with OpenJDK 8:
+> [!NOTE]
+> I *hightly* recommend not using Java 8 unless it is neccesary, but if it is, these flags will work with OpenJDK 8:
 > ```
 > -XX:+UnlockExperimentalVMOptions -XX:+UnlockDiagnosticVMOptions -XX:+AlwaysActAsServerClassMachine -XX:+ParallelRefProcEnabled -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:+PerfDisableSharedMem -XX:+AggressiveOpts -XX:+UseFastAccessorMethods -XX:MaxInlineLevel=15 -XX:MaxVectorSize=32 -XX:+UseCompressedOops -XX:ThreadPriorityPolicy=1 -XX:+UseDynamicNumberOfGCThreads -XX:NmethodSweepActivity=1 -XX:ReservedCodeCacheSize=350M -XX:-DontCompileHugeMethods -XX:MaxNodeLimit=240000 -XX:NodeLimitFudgeFactor=8000 -XX:+UseFPUForSpilling
 > ```
 
-> Note: You can also get Java 8 versions of GraalVM EE from the [21.X section on the Oracle site](https://www.oracle.com/downloads/graalvm-downloads.html), for that, use these arguments instead:
+> [!NOTE]
+> You can also get Java 8 versions of GraalVM EE from the [21.X section on the Oracle site](https://www.oracle.com/downloads/graalvm-downloads.html), for that, use these arguments instead:
 > ```
 > -XX:+UnlockExperimentalVMOptions -XX:+UnlockDiagnosticVMOptions -XX:+AlwaysActAsServerClassMachine -XX:+ParallelRefProcEnabled -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:+AggressiveOpts -XX:+UseFastAccessorMethods -XX:AllocatePrefetchStyle=1 -XX:ThreadPriorityPolicy=1 -XX:+UseDynamicNumberOfGCThreads -XX:NmethodSweepActivity=1 -XX:ReservedCodeCacheSize=350M -XX:-DontCompileHugeMethods -XX:MaxNodeLimit=240000 -XX:NodeLimitFudgeFactor=8000 -XX:+UseFPUForSpilling -XX:+EnableJVMCI -XX:+UseJVMCICompiler -XX:+EagerJVMCI -Dgraal.TuneInlinerExploration=1 -Dgraal.CompilerConfiguration=enterprise -Dgraal.UsePriorityInlining=true -Dgraal.Vectorization=true -Dgraal.OptDuplication=true -Dgraal.DetectInvertedLoopsAsCounted=true -Dgraal.LoopInversion=true -Dgraal.VectorizeHashes=true -Dgraal.EnterprisePartialUnroll=true -Dgraal.VectorizeSIMD=true -Dgraal.StripMineNonCountedLoops=true -Dgraal.SpeculativeGuardMovement=true -Dgraal.InfeasiblePathCorrelation=true
 > ```
@@ -100,13 +106,17 @@ Non-Proactive ZGC is great for high memory/high core count servers. It has no se
 -XX:+UseZGC -XX:AllocatePrefetchStyle=1 -XX:-ZProactive
 ```
 
-> Note: It has a significant client FPS hit.
+> [!NOTE]
+> It has a significant client FPS hit.
 
-> Note: Non-Proactive ZGC is unavailable in Java 8 and much less performant in Java 11 than it is in Java 17+.
+> [!NOTE]
+> Non-Proactive ZGC is unavailable in Java 8 and much less performant in Java 11 than it is in Java 17+.
 
-> Note: Allocate more RAM and more `ConcGCThreads` than you normally would for other GC.
+> [!NOTE]
+> Allocate more RAM and more `ConcGCThreads` than you normally would for other GC.
 
-> Note: ZGC does not play well with `AllocatePrefetchStyle=3`, hence setting it to 1 overrides the previous entry. Remove the old one if you want.
+> [!NOTE]
+> ZGC does not play well with `AllocatePrefetchStyle=3`, hence setting it to 1 overrides the previous entry. Remove the old one if you want.
 
 <br/>
 
@@ -116,11 +126,14 @@ Generational ZGC is new, so no one has really tested it, though I would assume i
 -XX:+UseZGC -XX:AllocatePrefetchStyle=1 -XX:+ZGenerational
 ```
 
-> Note: Generational ZGC is only available in Java 21+
+> [!NOTE]
+> Generational ZGC is only available in Java 21+
 
-> Note: Allocate more RAM and more `ConcGCThreads` than you normally would for other GC.
+> [!NOTE]
+> Allocate more RAM and more `ConcGCThreads` than you normally would for other GC.
 
-> Note: ZGC does not like `AllocatePrefetchStyle=3`, hence setting it to 1 overrides the previous entry. Remove the old one if you want.
+> [!NOTE]
+> ZGC does not like `AllocatePrefetchStyle=3`, hence setting it to 1 overrides the previous entry. Remove the old one if you want.
 
 <br/>
 
@@ -132,9 +145,11 @@ Shenandoah performs well on clients, but kills server throughput. Enable it with
 
 See more tuning options [here](https://wiki.openjdk.org/display/shenandoah/Main). The "herustic" and "mode" options don't change much (except for "compact," which you should not use). 
 
-> Note: Red Hat OpenJDK 8 is the only Java 8 that supports Shenandoah.
+> [!NOTE]
+> Red Hat OpenJDK 8 is the only Java 8 that supports Shenandoah.
 
-> Note: Shenandoah does not like `AllocatePrefetchStyle=3`, hence setting it to 1 overrides the previous entry. Remove the old one if you want.
+> [!NOTE]
+> Shenandoah does not like `AllocatePrefetchStyle=3`, hence setting it to 1 overrides the previous entry. Remove the old one if you want.
 
 <br/>
 
@@ -146,9 +161,11 @@ These are similar to the Aikar flags, but with shorter, more frequent pauses, le
 -XX:+UseG1GC -XX:MaxGCPauseMillis=37 -XX:+PerfDisableSharedMem -XX:G1HeapRegionSize=16M -XX:G1NewSizePercent=23 -XX:G1ReservePercent=20 -XX:SurvivorRatio=32 -XX:G1MixedGCCountTarget=3 -XX:G1HeapWastePercent=20 -XX:InitiatingHeapOccupancyPercent=10 -XX:G1RSetUpdatingPauseTimePercent=0 -XX:MaxTenuringThreshold=1 -XX:G1SATBBufferEnqueueingThresholdPercent=30 -XX:G1ConcMarkStepDurationMillis=5.0 -XX:GCTimeRatio=99 -XX:G1ConcRefinementServiceIntervalMillis=150 -XX:G1ConcRSHotCardLimit=16
 ```
 
-> NOTE: Java 21 removed support for the `G1ConcRefinementServiceIntervalMillis` flag and the `-XX:G1ConcRSHotCardLimit=16` flag. Remove them if you want.
+> [!NOTE]
+> Java 21 removed support for the `G1ConcRefinementServiceIntervalMillis` flag and the `-XX:G1ConcRSHotCardLimit=16` flag. Remove them if you want.
 
-> Note: `G1NewSizePercent` and `MaxGCPauseMillis` can be used to tune the frequency/dureation of your young generation collections. `G1HeapWastePercent=18` should be removed if you are getting any old generation pauses on your setup. Alternatively, you can raise it and set `G1MixedGCCountTarget` to 2 or 1 to make mixed garbage collection even lazier (at the cost of higher memory usage). 
+> [!NOTE]
+> `G1NewSizePercent` and `MaxGCPauseMillis` can be used to tune the frequency/dureation of your young generation collections. `G1HeapWastePercent=18` should be removed if you are getting any old generation pauses on your setup. Alternatively, you can raise it and set `G1MixedGCCountTarget` to 2 or 1 to make mixed garbage collection even lazier (at the cost of higher memory usage). 
 
 <br/>
 
@@ -159,7 +176,8 @@ Longer pauses are more acceptable on servers. These flags are very close to the 
 -XX:+UseG1GC -XX:MaxGCPauseMillis=130 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=28 -XX:G1HeapRegionSize=16M -XX:G1ReservePercent=20 -XX:G1MixedGCCountTarget=3 -XX:InitiatingHeapOccupancyPercent=10 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=0 -XX:SurvivorRatio=32 -XX:MaxTenuringThreshold=1 -XX:G1SATBBufferEnqueueingThresholdPercent=30 -XX:G1ConcMarkStepDurationMillis=5 -XX:G1ConcRefinementServiceIntervalMillis=150 -XX:G1ConcRSHotCardLimit=16
 ```
 
-> NOTE: Java 21 removed support for the `G1ConcRefinementServiceIntervalMillis` flag and the `-XX:G1ConcRSHotCardLimit=16` flag. Remove them if you want.
+> [!NOTE]
+> Java 21 removed support for the `G1ConcRefinementServiceIntervalMillis` flag and the `-XX:G1ConcRSHotCardLimit=16` flag. Remove them if you want.
 
 <br/>
 
@@ -175,11 +193,14 @@ No other "threading" flags like `ParallelGCThreads` or `JVMCIThreads` are necess
 # Large Pages
 Enabling large pages improves the performance of Minecraft servers and clients by reducing the load on your system. Here's a good guide: https://kstefanj.github.io/2021/05/19/large-pages-and-java.html
 
-> Note: Windows 10 Home doesn't have `gpedit.msc` and thus, can't follow the guide above, intead use this guide: https://awesomeprojectsxyz.blogspot.com/2017/11/windows-10-home-how-to-enable-lock.html?m=1, also you have to download the tool from here: https://gist.github.com/eyecatchup/0107bab3d92473cb8a3d3547848fc442
+> [!CAUTION]
+> On Windows, you **must** run Java and your launcher as an administrator. This is a security risk, and you should skip this section if you aren't comfortable with that. That means checking the "run as administrator" compatibility checkbox for `javaw.exe`, `java.exe` and `your launcher.exe`, otherwise Large Pages will silently fail.
 
-> Note: On Windows, you **must** run Java and your launcher as an administrator. This is a security risk, and you should skip this section if you aren't comfortable with that. That means checking the "run as administrator" compatibility checkbox for `javaw.exe`, `java.exe` and `your launcher.exe`, otherwise Large Pages will silently fail.
+> [!NOTE]
+> Windows 10 Home doesn't have `gpedit.msc` and thus, can't follow the guide above, intead use this guide: https://awesomeprojectsxyz.blogspot.com/2017/11/windows-10-home-how-to-enable-lock.html?m=1, also you have to download the tool from here: https://gist.github.com/eyecatchup/0107bab3d92473cb8a3d3547848fc442
 
-> Note: On Linux, you generally want to use `-XX:+UseTransparentHugePages`. To have the kernel automatically allocate memory instead (for a bigger performance boost). Azul has a good guide located [here](https://docs.azul.com/prime/Enable-Huge-Pages)
+> [!NOTE]
+> On Linux, you generally want to use `-XX:+UseTransparentHugePages`.
 
 Check and see if large pages is working with the `-Xlog:gc+init` java argument in Java 17. 
 
@@ -214,7 +235,8 @@ After launching Minecraft, set Java to run at an "Above Normal" process priority
 
 Linux users can add  `sudo nice -n -10` to the beginning of the launch command.
 
-> Note: nice levels below 0 (with the "max" being -20) require running Minecraft as `sudo`. This is a security risk, and you should skip this section if you aren't comfortable with that or stay above 0.
+> [!CAUTION]
+> nice levels below 0 (with the "max" being -20) require running Minecraft as `sudo`. This is a security risk, and you should skip this section if you aren't comfortable with that or stay above 0.
 
 <br/>
 
