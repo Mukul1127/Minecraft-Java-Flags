@@ -4,7 +4,7 @@
   </a>
 </div>
 
-<br />
+<br>
 
 Welcome! this is a guide to tune Java for Minecraft.
 
@@ -13,7 +13,7 @@ Welcome! this is a guide to tune Java for Minecraft.
 > 
 > 2. While these flags are easy to copy-paste and forget, they are no substitute for clearing laggy things out with mods like Spark.
 
-<br />
+<br>
 
 # Picking a Java Distributor
 Java runtimes from Azul or Microsoft, Adoptium, Amazon and so on are all basically identical as they are based on OpenJDK. Some notable exceptions are:
@@ -30,7 +30,7 @@ Java runtimes from Azul or Microsoft, Adoptium, Amazon and so on are all basical
 
 If you dont know what to pick, I recommend GraalVM or Adoptium. You can download most of the good OpenJDK based ones from [here](https://adoptium.net/marketplace/), and you can download GraalVM from [here](https://www.graalvm.org/downloads/).
 
-<br />
+<br>
 
 # Picking the correct Java version
 While any Java Distributor will work just fine, you may run into compatibility issues depending on the java version you use. Refer to the following table to choose the correct version:
@@ -42,7 +42,7 @@ While any Java Distributor will work just fine, you may run into compatibility i
 | 1.16               | Requires Java 8+  | May Require Java 8 |
 | 1.15 and below     | Only Java 8       | Only Java 8        |
 
-<br />
+<br>
 
 # Memory Allocation
 Minimum and maximum memory flags (`-xms` and `-xmx`) should be set to the same value as explained [here](https://dzone.com/articles/benefits-of-setting-initial-and-maximum-memory-siz) with one caveat: if you are on a low-memory system, and Minecraft takes up almost all your RAM, set your minimum memory below your maximum memory to conserve as much as possible. Also try removing these arguments:
@@ -58,7 +58,7 @@ Sizes are set in megabytes or gigabytes so `-Xms4096M` or `-Xmx8G` are both corr
 > 
 > 2. If you are using a third-party Minecraft launcher like Prism Launcher or ATLauncher, you shouldn't use memory arguments and instead control memory through the dedicated section in the launcher.
 
-<br/>
+<br>
 
 # Base Java Flags
 These are the majority of the flags. The flags below will work for any ***OpenJDK*** 11+ build. They are the same on both servers and clients:
@@ -91,12 +91,12 @@ You can also get Java 8 versions of GraalVM EE from the [21.X section on the Ora
 ```
 Though make sure to set `-Dgraal.VectorizeSIMD` to `false` if you run shaders as this version causes issues with them. This old version also breaks constellation rendering in 1.16.5 Astral Sorcery. This is possibly related to the shader bug. See: https://github.com/HellFirePvP/AstralSorcery/issues/1963
 
-<br />
+<br>
 
 # Garbage Collection
 **Garbage collection flags should be added to Minecraft servers and clients**, as the default "pauses" to stop and collect garbage manifest as stutters on the client and lag on servers. Use the `/sparkc gcmonitor` command in Spark to observe pauses in-game. *Any* old generation pauses are bad, and young generation G1GC collections should be infrequent, but short enough to be imperceptible.  
 
-<br />
+<br>
 
 ### Non-Proactive ZGC 
 Non-Proactive ZGC is great for high memory/high core count servers. It has no server throughput hit I can measure, and absolutely does not stutter. However, it requires more RAM and more cores than other garbage collectors. Enable it with
@@ -218,7 +218,7 @@ You can create a desktop shortcut to your Minecraft launcher through the Special
 
 Be sure to turn off VSync and the in-game Minecraft frame limiter.
 
-<br />
+<br>
 
 # Process Priority
 After launching Minecraft, set Java to run at an "Above Normal" process priority in Windows with the Task Manager in the details tab:
@@ -300,7 +300,7 @@ Instead of OptiFine, I would recommend more compatible alternatives like [Sodium
 
 - Many Java 8 flags (such as `-XX:MaxInlineLevel=15 -XX:MaxVectorSize=32`) are just copied from the Java 17 defaults. Others (like `+AggressiveOpts`) are only non-default in some older Java 8 builds.
 
-<br />
+<br>
 
 # Unmentioned Sources
 - Updated Aikar flags from this repo: [etil2jz/etil-minecraft-flags](https://github.com/etil2jz/etil-minecraft-flags)
