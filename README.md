@@ -1,3 +1,11 @@
+<div align="center">
+  <a href="https://github.com/kyechan99/capsule-render">
+    <img src="https://capsule-render.vercel.app/api?type=waving&height=250&color=timeGradient&text=Minecraft%20Java%20Flags&fontAlignY=46&animation=fadeIn">
+  </a>
+</div>
+
+<br />
+
 Welcome! this is a guide to tune Java for Minecraft.
 
 > Note: While these tweaks notably reduce some server and client stutters, expect only modest TPS gains + minimal FPS gains at best, and somewhat increased RAM + CPU usage.
