@@ -33,6 +33,8 @@ While any Java Distributor will work just fine, you may run into compatibility i
 | 1.16               | Requires Java 8+  | May Require Java 8 |
 | 1.15 and below     | Only Java 8       | Only Java 8        |
 
+<br />
+
 # Memory Allocation
 Minimum and maximum memory flags (`-xms` and `-xmx`) should be set to the same value as explained here: https://dzone.com/articles/benefits-of-setting-initial-and-maximum-memory-siz with one caveat: if you are on a low-memory system, and Minecraft takes up almost all your RAM, set your minimum memory below your maximum memory to conserve as much as possible. Also try removing these arguments:
 ```
