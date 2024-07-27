@@ -2,7 +2,9 @@ Welcome! this is a guide to tune Java for maximum performance in Minecraft.
 
 Discord for questions and such: https://discord.gg/zeFSR9PnUw, also feel free to make an issue.
 
-> Note: While these flags are easy to copy-paste and forget, they are no substitute for clearing laggy things out with mods like Spark
+> Note: While these tweaks notably reduce some server and client stutters, expect only modest TPS gains + minimal FPS gains at best, and somewhat increased RAM + CPU usage.
+
+> Note: While these flags are easy to copy-paste and forget, they are no substitute for clearing laggy things out with mods like Spark.
 
 <br />
 
@@ -82,13 +84,11 @@ And for OpenJ9, use the flags below instead:
 <br />
 
 # Garbage Collection
-
 **Garbage collection flags should be added to Minecraft servers and clients**, as the default "pauses" to stop and collect garbage manifest as stutters on the client and lag on servers. Use the `/sparkc gcmonitor` command in Spark to observe pauses in-game. *Any* old generation pauses are bad, and young generation G1GC collections should be infrequent, but short enough to be imperceptible.  
 
 <br />
 
 ### Non-Proactive ZGC 
-
 Non-Proactive ZGC is great for high memory/high core count servers. It has no server throughput hit I can measure, and absolutely does not stutter. However, it requires more RAM and more cores than other garbage collectors. Enable it with
 ```
 -XX:+UseZGC -XX:AllocatePrefetchStyle=1 -XX:-ZProactive
@@ -105,7 +105,6 @@ Non-Proactive ZGC is great for high memory/high core count servers. It has no se
 <br/>
 
 ### Generational ZGC (New and not well tested!)
-
 Generational ZGC is new, so no one has really tested it, though I would assume it's similar to Proactive ZGC, except it also apparently runs well-ish on clients? Enable it with
 ```
 -XX:+UseZGC -XX:AllocatePrefetchStyle=1 -XX:+ZGenerational
@@ -120,7 +119,6 @@ Generational ZGC is new, so no one has really tested it, though I would assume i
 <br/>
 
 ### Shenandoah
-
 Shenandoah performs well on clients, but kills server throughput. Enable it with 
 ```
 -XX:+UseShenandoahGC -XX:ShenandoahGCMode=iu -XX:ShenandoahGuaranteedGCInterval=1000000 -XX:AllocatePrefetchStyle=1
@@ -135,7 +133,6 @@ See more tuning options [here](https://wiki.openjdk.org/display/shenandoah/Main)
 <br/>
 
 ### Client G1GC
-
 G1GC is the default garbage collector for all JREs. Aikar's [famous Minecraft server G1GC arguments](https://aikar.co/2018/07/02/tuning-the-jvm-g1gc-garbage-collector-flags-for-minecraft/) run great on clients, with two caveats: they effectively [clamp](https://www.oracle.com/technical-resources/articles/java/g1gc.html) the `MaxGCPauseMillis` parameter by setting `G1NewSizePercent` so high, producing long stutters on some clients, and they collect oldgen garbage too aggressively (as the client produces *far* less than a populated server). 
 
 These are similar to the Aikar flags, but with shorter, more frequent pauses, less aggressive G1 mixed collection and more aggressive background collection: 
@@ -150,7 +147,6 @@ These are similar to the Aikar flags, but with shorter, more frequent pauses, le
 <br/>
 
 ### Server G1GC
-
 Longer pauses are more acceptable on servers. These flags are very close to the aikar defaults:
 
 ```
@@ -162,7 +158,6 @@ Longer pauses are more acceptable on servers. These flags are very close to the 
 <br/>
 
 ### Garbage Collection Threading
-
 `-XX:ConcGCThreads=[Some Number]` controls the [*maximum* number](https://github.com/openjdk/jdk/blob/dd34a4c28da73c798e021c7473ac57ead56c9903/src/hotspot/share/gc/z/zHeuristics.cpp#L96-L104) of background threads the garbage collector is allowed to use, and defaults to `number of logical (hyperthreaded) cores / 4`. Recent versions of Java will [reduce the number of gc threads, if needed](https://wiki.openjdk.org/display/zgc/Main#Main-SettingConcurrentGCThreads).
 
 In some cases (especially with ZGC or Shenandoh) you want to increase this thread cap past the default. I recommend `[number of REAL (non-hyperthreaded) cores - 2]` on most CPUs, but you may need to play with this parameter. If its too low, garbage collection can't keep up with Minecraft, and the game will stutter and/or start eating gobs of RAM and crash. If its too high, it might slow the game down, especially if you are running Java 8. 
@@ -218,7 +213,6 @@ Linux users can add  `sudo nice -n -10` to the beginning of the launch command.
 <br/>
 
 # Performance Mods
-
 This is a **fantastic** repo for finding performance mods: https://github.com/TheUsefulLists/UsefulMods
 
 Instead of OptiFine, I would recommend more compatible alternatives like [Sodium](https://modrinth.com/mod/sodium) or [Embeddium](https://modrinth.com/mod/embeddium) + [Iris](https://modrinth.com/mod/iris) for Fabric/Quilt and [Embeddium](https://modrinth.com/mod/embeddium) or [Rubidium](https://modrinth.com/mod/rubidium) + [Oculus](https://modrinth.com/mod/oculus) for Forge/NeoForge. Please note that there are other optimization mods.
@@ -239,7 +233,6 @@ Instead of OptiFine, I would recommend more compatible alternatives like [Sodium
 <br/>
 
 # FAQ
-
 - Java tweaks improve server performance and client stuttering, but they don't boost average client FPS much (if at all). For that, running [correct/up-to-date graphics drivers](https://github.com/CaffeineMC/sodium-fabric/wiki/Driver-Compatibility) and [performance mods](https://github.com/TheUsefulLists/UsefulMods) is far more important.
 
 - IBM's OpenJ9 does indeed save RAM, as its reputation would suggest, but is over 30% slower at server chunkgen in my tests. If there are any flags that make it competitive with OpenJDK, please let me know on Discord or make a issue.
