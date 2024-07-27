@@ -208,7 +208,7 @@ After launching Minecraft, set Java to run at an "Above Normal" process priority
 
 Linux users can add  `sudo nice -n -10` to the beginning of the launch command.
 
-> Note: nice levels below 0 (with the "max" being -20) require running Minecraft as `sudo`. Alternatively, use the `renice` command after launching Minecraft to avoid this security risk.
+> Note: nice levels below 0 (with the "max" being -20) require running Minecraft as `sudo`. This is a security risk, and you should skip this section if you aren't comfortable with that or stay above 0.
 
 <br/>
 
