@@ -89,7 +89,7 @@ You can also get Java 8 versions of GraalVM EE from the [21.X section on the Ora
 ```
 -XX:+UnlockExperimentalVMOptions -XX:+UnlockDiagnosticVMOptions -XX:+AlwaysActAsServerClassMachine -XX:+ParallelRefProcEnabled -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:+AggressiveOpts -XX:+UseFastAccessorMethods -XX:AllocatePrefetchStyle=1 -XX:ThreadPriorityPolicy=1 -XX:+UseDynamicNumberOfGCThreads -XX:NmethodSweepActivity=1 -XX:ReservedCodeCacheSize=350M -XX:-DontCompileHugeMethods -XX:MaxNodeLimit=240000 -XX:NodeLimitFudgeFactor=8000 -XX:+UseFPUForSpilling -XX:+EnableJVMCI -XX:+UseJVMCICompiler -XX:+EagerJVMCI -Dgraal.TuneInlinerExploration=1 -Dgraal.CompilerConfiguration=enterprise -Dgraal.UsePriorityInlining=true -Dgraal.Vectorization=true -Dgraal.OptDuplication=true -Dgraal.DetectInvertedLoopsAsCounted=true -Dgraal.LoopInversion=true -Dgraal.VectorizeHashes=true -Dgraal.EnterprisePartialUnroll=true -Dgraal.VectorizeSIMD=true -Dgraal.StripMineNonCountedLoops=true -Dgraal.SpeculativeGuardMovement=true -Dgraal.InfeasiblePathCorrelation=true
 ```
-Though make sure to set `-Dgraal.VectorizeSIMD` to `false` if you run shaders as this version causes issues with them. This old version also breaks constellation rendering in 1.16.5 Astral Sorcery. This is possibly related to the shader bug. See: [HellFirePvP/AstralSorcery#1963](https://github.com/HellFirePvP/AstralSorcery/issues/1963)
+Though make sure to set `-Dgraal.VectorizeSIMD` to `false` if you run shaders as this version causes issues with them. This old version also breaks constellation rendering in 1.16.5 Astral Sorcery. This is possibly related to the shader bug. See: https://github.com/HellFirePvP/AstralSorcery/issues/1963
 
 <br />
 
@@ -262,7 +262,7 @@ Instead of OptiFine, I would recommend more compatible alternatives like [Sodium
 # Flag Explanations
 - Aikar G1GC flags are explained [here](https://aikar.co/2018/07/02/tuning-the-jvm-g1gc-garbage-collector-flags-for-minecraft/)
 
-- `-XX:+UnlockExperimentalVMOptions -XX:+UnlockDiagnosticVMOptions` simply unlock more flags to be used. These can be listed with the `-XX:+PrintFlagsFinal` and `-XX:+JVMCIPrintProperties` flags, see [Flag Dumps](Flag_Dumps).
+- `-XX:+UnlockExperimentalVMOptions -XX:+UnlockDiagnosticVMOptions` simply unlock more flags to be used. These can be listed with the `-XX:+PrintFlagsFinal` and `-XX:+JVMCIPrintProperties` flags.
 
 - `-XX:G1MixedGCCountTarget=3`: This is how many oldgen GC blocks to target in "mixed" GC. These mixed collections are much slower, and the Minecraft client doesn't generate oldgen very quickly, so we can lower this value to 3, 2, or even 1 for shorter GC pauses.
 
@@ -286,7 +286,7 @@ Instead of OptiFine, I would recommend more compatible alternatives like [Sodium
 
 - `-XX:G1RSetUpdatingPauseTimePercent=0`: We want *all* this work to be done in the G1GC concurrent threads, not the pauses.
 
-- `-XX:G1HeapWastePercent=18` Don't bother collecting from old gen until its above this percent. This avoids triggering slower "mixed" young generation GCs, which is fine since Minecraft (with sufficient memory) doesn't fill the old gen that fast. Idea from [Reddit](https://www.reddit.com/r/Minecraft/comments/k9zb7m/tuning_jvm_gc_for_singleplayer/).
+- `-XX:G1HeapWastePercent=18` Don't bother collecting from old gen until its above this percent. This avoids triggering slower "mixed" young generation GCs, which is fine since Minecraft (with sufficient memory) doesn't fill the old gen that fast. Idea from [r/Minecraft/comments/k9zb7m](https://www.reddit.com/r/Minecraft/comments/k9zb7m/tuning_jvm_gc_for_singleplayer/).
 
 - `-XX:GCTimeRatio=99` As a goal, 1% of CPU time should be spent on garbage collection. Default is 12, which seems way too low. The default for Java 8 was 99.
 
@@ -305,13 +305,13 @@ Instead of OptiFine, I would recommend more compatible alternatives like [Sodium
 # Unmentioned Sources
 - Updated Aikar flags from this repo: [etil2jz/etil-minecraft-flags](https://github.com/etil2jz/etil-minecraft-flags)
 
-- Reddit post from a Forge dev: [r/feedthebeast/comments/5jhuk9](https://www.reddit.com/r/feedthebeast/comments/5jhuk9/modded_mc_and_memory_usage_a_history_with_a/)
+- Reddit post from a Forge dev: [r/feedthebeast/comments/5jhuk9](https://www.reddit.com/r/feedthebeast/comments/5jhuk9/modded_mc_and_memory_usage_a_history_with_a)
 
-- GraalVM release notes: [graalvm.org/release-notes](https://www.graalvm.org/release-notes/)
+- GraalVM release notes: [graalvm.org/release-notes](https://www.graalvm.org/release-notes)
 
 - Oracle's Java 17 Documentation: [docs.oracle.com/en/java/javase/17/docs/specs/man/java](https://docs.oracle.com/en/java/javase/17/docs/specs/man/java.html)
 
-- VM Options explorer: [chriswhocodes.com](https://chriswhocodes.com/)
+- VM Options explorer: [chriswhocodes.com](https://chriswhocodes.com)
 
 - Java itself, via the `-XX:+PrintFlagsFinal` and the `-XX:+JVMCIPrintProperties` flags to dump flag descriptions/defaults.
 
