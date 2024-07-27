@@ -45,7 +45,7 @@ While any Java Distributor will work just fine, you may run into compatibility i
 <br />
 
 # Memory Allocation
-Minimum and maximum memory flags (`-xms` and `-xmx`) should be set to the same value as explained here: https://dzone.com/articles/benefits-of-setting-initial-and-maximum-memory-siz with one caveat: if you are on a low-memory system, and Minecraft takes up almost all your RAM, set your minimum memory below your maximum memory to conserve as much as possible. Also try removing these arguments:
+Minimum and maximum memory flags (`-xms` and `-xmx`) should be set to the same value as explained [here](https://dzone.com/articles/benefits-of-setting-initial-and-maximum-memory-siz) with one caveat: if you are on a low-memory system, and Minecraft takes up almost all your RAM, set your minimum memory below your maximum memory to conserve as much as possible. Also try removing these arguments:
 ```
 -XX:NmethodSweepActivity=1 -XX:ReservedCodeCacheSize=400M -XX:NonNMethodCodeHeapSize=12M -XX:ProfiledCodeHeapSize=194M -XX:NonProfiledCodeHeapSize=194M
 ```
@@ -89,7 +89,7 @@ You can also get Java 8 versions of GraalVM EE from the [21.X section on the Ora
 ```
 -XX:+UnlockExperimentalVMOptions -XX:+UnlockDiagnosticVMOptions -XX:+AlwaysActAsServerClassMachine -XX:+ParallelRefProcEnabled -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:+AggressiveOpts -XX:+UseFastAccessorMethods -XX:AllocatePrefetchStyle=1 -XX:ThreadPriorityPolicy=1 -XX:+UseDynamicNumberOfGCThreads -XX:NmethodSweepActivity=1 -XX:ReservedCodeCacheSize=350M -XX:-DontCompileHugeMethods -XX:MaxNodeLimit=240000 -XX:NodeLimitFudgeFactor=8000 -XX:+UseFPUForSpilling -XX:+EnableJVMCI -XX:+UseJVMCICompiler -XX:+EagerJVMCI -Dgraal.TuneInlinerExploration=1 -Dgraal.CompilerConfiguration=enterprise -Dgraal.UsePriorityInlining=true -Dgraal.Vectorization=true -Dgraal.OptDuplication=true -Dgraal.DetectInvertedLoopsAsCounted=true -Dgraal.LoopInversion=true -Dgraal.VectorizeHashes=true -Dgraal.EnterprisePartialUnroll=true -Dgraal.VectorizeSIMD=true -Dgraal.StripMineNonCountedLoops=true -Dgraal.SpeculativeGuardMovement=true -Dgraal.InfeasiblePathCorrelation=true
 ```
-Though make sure to set `-Dgraal.VectorizeSIMD` to `false` if you run shaders as this version causes issues with them. This old version also breaks constellation rendering in 1.16.5 Astral Sorcery. This is possibly related to the shader bug. See: https://github.com/HellFirePvP/AstralSorcery/issues/1963
+Though make sure to set `-Dgraal.VectorizeSIMD` to `false` if you run shaders as this version causes issues with them. This old version also breaks constellation rendering in 1.16.5 Astral Sorcery. This is possibly related to the shader bug. See: [HellFirePvP/AstralSorcery#1963](https://github.com/HellFirePvP/AstralSorcery/issues/1963)
 
 <br />
 
@@ -184,7 +184,7 @@ No other "threading" flags like `ParallelGCThreads` or `JVMCIThreads` are necess
 <br/>
 
 # Large Pages
-Enabling large pages improves the performance of Minecraft servers and clients by reducing the load on your system. Here's a good guide: https://kstefanj.github.io/2021/05/19/large-pages-and-java.html
+Enabling large pages improves the performance of Minecraft servers and clients by reducing the load on your system. [Here's a good guide](https://kstefanj.github.io/2021/05/19/large-pages-and-java.html)
 
 > [!CAUTION]
 > On Windows, you **must** run Java and your launcher as an administrator. This is a security risk, and you should skip this section if you aren't comfortable with that. That means checking the "run as administrator" compatibility checkbox for `javaw.exe`, `java.exe` and `your launcher.exe`, otherwise Large Pages will silently fail.
@@ -209,7 +209,7 @@ A "universal" Windows mod akin to [ReShade](https://reshade.me/), SpecialK has 2
 
 - A OpenGL-to-DirectX11 wrapper called OpenGL-IK that eliminates Minecraft's windowed mode overhead, and enables other features (like auto-HDR or a resizable borderless window).
 
-Download it here: https://wiki.special-k.info/en/SpecialK/Tools
+Download it [here](https://wiki.special-k.info/en/SpecialK/Tools).
 
 Add your Minecraft launcher, and check the "elevated service" checkbox. Then navigate to your java bin folder where your javaw.exe is, and create an empty file called `SpecialK.OpenGL32`. Launch your Minecraft launcher with the SpecialK launcher, and the launcher will then "inject" SpecialK into Minecraft.
 ![SpecialK](specialk.PNG)
@@ -233,9 +233,9 @@ Linux users can add  `sudo nice -n -10` to the beginning of the launch command.
 <br/>
 
 # Performance Mods
-This is a **fantastic** repo for finding performance mods: https://github.com/TheUsefulLists/UsefulMods
-
 Instead of OptiFine, I would recommend more compatible alternatives like [Sodium](https://modrinth.com/mod/sodium) or [Embeddium](https://modrinth.com/mod/embeddium) + [Iris](https://modrinth.com/mod/iris) for Fabric/Quilt and [Embeddium](https://modrinth.com/mod/embeddium) or [Rubidium](https://modrinth.com/mod/rubidium) + [Oculus](https://modrinth.com/mod/oculus) for Forge/NeoForge. Please note that there are other optimization mods.
+
+[TheUsefulLists/UsefulMods](https://github.com/TheUsefulLists/UsefulMods) is also a good place.
 
 <br/>
 
@@ -260,7 +260,7 @@ Instead of OptiFine, I would recommend more compatible alternatives like [Sodium
 <br/>
 
 # Flag Explanations
-- Aikar G1GC flags are explained here: https://aikar.co/2018/07/02/tuning-the-jvm-g1gc-garbage-collector-flags-for-minecraft/
+- Aikar G1GC flags are explained [here](https://aikar.co/2018/07/02/tuning-the-jvm-g1gc-garbage-collector-flags-for-minecraft/)
 
 - `-XX:+UnlockExperimentalVMOptions -XX:+UnlockDiagnosticVMOptions` simply unlock more flags to be used. These can be listed with the `-XX:+PrintFlagsFinal` and `-XX:+JVMCIPrintProperties` flags, see [Flag Dumps](Flag_Dumps).
 
@@ -268,7 +268,7 @@ Instead of OptiFine, I would recommend more compatible alternatives like [Sodium
 
 - `-XX:-DontCompileHugeMethods` *Allows* huge methods to be compiled. Modded Minecraft has some of these, and we don't care about higher background compiler CPU usage.
 
-- `-XX:MaxNodeLimit=240000 -XX:NodeLimitFudgeFactor=8000` Enable optimization of larger methods. See: https://bugs.java.com/bugdatabase/view_bug.do?bug_id=8058148.
+- `-XX:MaxNodeLimit=240000 -XX:NodeLimitFudgeFactor=8000` Enable optimization of larger methods. See [Java Bug #8058148](https://bugs.java.com/bugdatabase/view_bug.do?bug_id=8058148).
 
 - `-XX:ReservedCodeCacheSize=400M -XX:NonNMethodCodeHeapSize=12M -XX:ProfiledCodeHeapSize=194M -XX:NonProfiledCodeHeapSize=194M` reserves more space for compiled code. All sections must "add up" to `ReservedCodeCacheSize`. I have observed modded Minecraft run into the default 250 megabyte limit with `XX:+PrintCodeCache`, but even if its not filled, the larger size makes eviction of compiled code less aggressive.
 
@@ -282,15 +282,15 @@ Instead of OptiFine, I would recommend more compatible alternatives like [Sodium
 
 - `-XX:ThreadPriorityPolicy=1` Use a wider range of thread priorities. Requires sudo on linux to work. Some JDKs (like Graal) enable this by default, but some don't.
 
-- `-XX:G1SATBBufferEnqueueingThresholdPercent=30 -XX:G1ConcMarkStepDurationMillis=5 -XX:G1ConcRefinementServiceIntervalMillis=150`: Optimizes G1GC's concurrent collection threads, still being tested: https://research.spec.org/icpe_proceedings/2014/p111.pdf.
+- `-XX:G1SATBBufferEnqueueingThresholdPercent=30 -XX:G1ConcMarkStepDurationMillis=5 -XX:G1ConcRefinementServiceIntervalMillis=150`: Optimizes G1GC's concurrent collection threads, still being tested [here](https://research.spec.org/icpe_proceedings/2014/p111.pdf).
 
 - `-XX:G1RSetUpdatingPauseTimePercent=0`: We want *all* this work to be done in the G1GC concurrent threads, not the pauses.
 
-- `-XX:G1HeapWastePercent=18` Don't bother collecting from old gen until its above this percent. This avoids triggering slower "mixed" young generation GCs, which is fine since Minecraft (with sufficient memory) doesn't fill the old gen that fast. Idea from: https://www.reddit.com/r/Minecraft/comments/k9zb7m/tuning_jvm_gc_for_singleplayer/.
+- `-XX:G1HeapWastePercent=18` Don't bother collecting from old gen until its above this percent. This avoids triggering slower "mixed" young generation GCs, which is fine since Minecraft (with sufficient memory) doesn't fill the old gen that fast. Idea from [Reddit](https://www.reddit.com/r/Minecraft/comments/k9zb7m/tuning_jvm_gc_for_singleplayer/).
 
 - `-XX:GCTimeRatio=99` As a goal, 1% of CPU time should be spent on garbage collection. Default is 12, which seems way too low. The default for Java 8 was 99.
 
-- `-XX:AllocatePrefetchStyle=3` Generate one prefetch instruction per cache line. More aggressive prefetching is generally useful on newer CPUs with large caches. It seems to break ZGC. See: https://github.com/openjdk/jdk/blob/bd90c4cfa63ba2de26f7482ed5d1704f9be9629f/src/hotspot/share/opto/macro.cpp#L1806.
+- `-XX:AllocatePrefetchStyle=3` Generate one prefetch instruction per cache line. More aggressive prefetching is generally useful on newer CPUs with large caches. It seems to break ZGC. See [OpenJDK's macro.cpp](https://github.com/openjdk/jdk/blob/bd90c4cfa63ba2de26f7482ed5d1704f9be9629f/src/hotspot/share/opto/macro.cpp#L1806).
 
 - `-Dgraal.LoopRotation=true` A non default optimization, will probably be default soon.
 
@@ -303,28 +303,26 @@ Instead of OptiFine, I would recommend more compatible alternatives like [Sodium
 <br />
 
 # Unmentioned Sources
-- Updated Aikar flags from this repo: https://github.com/etil2jz/etil-minecraft-flags
+- Updated Aikar flags from this repo: [etil2jz/etil-minecraft-flags](https://github.com/etil2jz/etil-minecraft-flags)
 
-- Reddit post from a Forge dev: https://www.reddit.com/r/feedthebeast/comments/5jhuk9/modded_mc_and_memory_usage_a_history_with_a/
+- Reddit post from a Forge dev: [r/feedthebeast/comments/5jhuk9](https://www.reddit.com/r/feedthebeast/comments/5jhuk9/modded_mc_and_memory_usage_a_history_with_a/)
 
-- Red Hat's optimization guide: https://www.redhat.com/en/blog/optimizing-rhel-8-run-java-implementation-minecraft-server
+- GraalVM release notes: [graalvm.org/release-notes](https://www.graalvm.org/release-notes/)
 
-- GraalVM release notes: https://www.graalvm.org/release-notes/
+- Oracle's Java 17 Documentation: [docs.oracle.com/en/java/javase/17/docs/specs/man/java](https://docs.oracle.com/en/java/javase/17/docs/specs/man/java.html)
 
-- Oracle's Java 17 Documentation: https://docs.oracle.com/en/java/javase/17/docs/specs/man/java.html
-
-- VM Options explorer: https://chriswhocodes.com/
+- VM Options explorer: [chriswhocodes.com](https://chriswhocodes.com/)
 
 - Java itself, via the `-XX:+PrintFlagsFinal` and the `-XX:+JVMCIPrintProperties` flags to dump flag descriptions/defaults.
 
-- OpenJDK source: https://github.com/openjdk/jdk/
+- OpenJDK source: [openjdk/jdk](https://github.com/openjdk/jdk/)
 
 - Testing from @keyboard.tn in Discord.
 
-- https://research.spec.org/icpe_proceedings/2014/p111.pdf
+- [research.spec.org/icpe_proceedings/2014/p111.pdf](https://research.spec.org/icpe_proceedings/2014/p111.pdf)
 
-- https://www.diva-portal.org/smash/get/diva2:1466940/FULLTEXT01.pdf
+- [diva-portal.org/smash/get/diva2:1466940/FULLTEXT01.pdf](https://www.diva-portal.org/smash/get/diva2:1466940/FULLTEXT01.pdf)
 
-- https://malloc.se/blog/zgc-jdk17
+- [malloc.se/blog/zgc-jdk17](https://malloc.se/blog/zgc-jdk17)
 
-- https://docs.oracle.com/javase/8/embedded/develop-apps-platforms/codecache.htm
+- [docs.oracle.com/javase/8/embedded/develop-apps-platforms/codecache](https://docs.oracle.com/javase/8/embedded/develop-apps-platforms/codecache.htm)
