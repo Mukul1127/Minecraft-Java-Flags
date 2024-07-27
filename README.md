@@ -1,7 +1,5 @@
 Welcome! this is a guide to tune Java for Minecraft.
 
-Discord for questions and such: https://discord.gg/zeFSR9PnUw, also feel free to make an issue.
-
 > Note: While these tweaks notably reduce some server and client stutters, expect only modest TPS gains + minimal FPS gains at best, and somewhat increased RAM + CPU usage.
 
 > Note: While these flags are easy to copy-paste and forget, they are no substitute for clearing laggy things out with mods like Spark.
