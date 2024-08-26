@@ -144,6 +144,8 @@ See more tuning options [here](https://wiki.openjdk.org/display/shenandoah/Main)
 > 1. Red Hat OpenJDK 8 is the only Java 8 that supports Shenandoah.
 > 
 > 2. Shenandoah does not like `AllocatePrefetchStyle=3`, hence setting it to 1 overrides the previous entry. Remove the old one if you want.
+>
+> 3. GraalVM currently doesn't support Shenandoah.
 
 <br/>
 
