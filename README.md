@@ -227,7 +227,7 @@ Be sure to turn off VSync and the in-game Minecraft frame limiter.
 # Process Priority
 After launching Minecraft, set Java to run at an "Above Normal" process priority in Windows with the Task Manager in the details tab:
 
-![taskmanager](taskmon.PNG)
+![taskmanager](taskmgr.png)
 
 Linux users can add  `sudo nice -n -10` to the beginning of the launch command.
 
