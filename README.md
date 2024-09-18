@@ -225,14 +225,18 @@ Be sure to turn off VSync and the in-game Minecraft frame limiter.
 <br>
 
 # Process Priority
-After launching Minecraft, set Java to run at an "Above Normal" process priority in Windows with the Task Manager in the details tab:
+After launching Minecraft, set Java to run at an "Realtime" process priority in Windows with the Task Manager in the details tab:
 
 ![Task Manager](taskmgr.png)
 
-Linux users can add  `sudo nice -n -10` to the beginning of the launch command.
+Linux users can add  `sudo nice -n -19` to the beginning of the launch command.
 
 > [!CAUTION]
-> On Linux, nice levels below 0 (with the "max" being -20) require running Minecraft as `root`. This is a security risk, and you should skip this section if you aren't comfortable with that or stay above 0.
+> On Linux, nice levels below 0 (with the "max" being -20) require running Minecraft as `root`. This is a security risk, and you should skip this section if you aren't comfortable with that.
+> Workarounds:
+> 1. Start game and run `renice` instead with the pid of the minecraft instance.
+> 2. Modify `/etc/security/limits.conf` to allow non-root users to go to -19.
+> 3. "Hacky" way to script it: `sudo nice -n -19 su <username> -c`
 
 <br/>
 
