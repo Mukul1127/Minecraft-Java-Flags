@@ -216,7 +216,7 @@ A "universal" Windows mod akin to [ReShade](https://reshade.me/), SpecialK has 2
 Download it [here](https://wiki.special-k.info/en/SpecialK/Tools).
 
 Add your Minecraft launcher, and check the "elevated service" checkbox. Then navigate to your java bin folder where your javaw.exe is, and create an empty file called `SpecialK.OpenGL32`. Launch your Minecraft launcher with the SpecialK launcher, and the launcher will then "inject" SpecialK into Minecraft.
-![SpecialK](specialk.PNG)
+![SpecialK](specialk.png)
 
 You can create a desktop shortcut to your Minecraft launcher through the SpecialK UI for even more convenience. 
 
@@ -227,7 +227,7 @@ Be sure to turn off VSync and the in-game Minecraft frame limiter.
 # Process Priority
 After launching Minecraft, set Java to run at an "Above Normal" process priority in Windows with the Task Manager in the details tab:
 
-![taskmanager](taskmgr.png)
+![Task Manager](taskmgr.png)
 
 Linux users can add  `sudo nice -n -10` to the beginning of the launch command.
 
