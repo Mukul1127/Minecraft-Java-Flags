@@ -192,6 +192,9 @@ No other "threading" flags like `ParallelGCThreads` or `JVMCIThreads` are necess
 # Large Pages
 Enabling large pages improves the performance of Minecraft servers and clients by reducing the load on your system. [Here's a good guide](https://kstefanj.github.io/2021/05/19/large-pages-and-java.html)
 
+> [!CAUTION]
+> For a while, people have though that Large Pages on Windows requires Administrator Privileges. Though on Windows 10 and above, it seems like Large Pages don't actually need administrator privileges (Source: https://sourceforge.net/p/sevenzip/discussion/45797/thread/d3ee3821b0/) I tested it myeslf and it worked without administrator privileges. If it doesn't work for you, try making javaw.exe run as administrator once, some guides, like the source I mentioned say this is needed for it to work.
+
 > [!NOTE]
 > 1. Windows Home doesn't have `gpedit.msc` and thus, can't follow the guide above, intead use [this guide](https://awesomeprojectsxyz.blogspot.com/2017/11/windows-10-home-how-to-enable-lock.html?m=1), also since microsoft took down the tool in mention, you have to download it from [here](https://gist.github.com/eyecatchup/0107bab3d92473cb8a3d3547848fc442).
 > 
