@@ -241,14 +241,18 @@ Linux users can add  `sudo nice -n -19` to the beginning of the launch command.
 <br/>
 
 # Performance Mods
-Instead of OptiFine, I would recommend more compatible alternatives like [Sodium](https://modrinth.com/mod/sodium) or [Embeddium](https://modrinth.com/mod/embeddium) + [Iris](https://modrinth.com/mod/iris) for Fabric/Quilt and [Embeddium](https://modrinth.com/mod/embeddium) or [Rubidium](https://modrinth.com/mod/rubidium) + [Oculus](https://modrinth.com/mod/oculus) for Forge/NeoForge. Please note that there are other optimization mods.
+If you want pure performance, don't use Optifine. There are better performing mods like [Sodium](https://modrinth.com/mod/sodium). Sodium also supports Fabric natively (unlike Optifine) and the 0.6 beta supports NeoForge aswell.
 
-[TheUsefulLists/UsefulMods](https://github.com/TheUsefulLists/UsefulMods) is also a good place.
+A Good Example with all the performance mods you'll need it [Simply Optimized](https://modrinth.com/modpack/sop).
+> [!NOTE]
+> It seems that Simply Optimized's list of mods in the description is out of date, instead check what mods come with the version of the modpack you are downloading.
+
+If you want a up-to-date Optifine replacement, you can instead take a look at [Fabulously Optimized](https://modrinth.com/modpack/fabulously-optimized).
 
 <br/>
 
 # Other Performance Tips
-- Run your Minecraft on Linux! In pretty much every scenario it runs very good, for servers, Clear Linux and RHEL are very well optimized, and for clients, CachyOS and EndeavorOS are amazing.
+- Run your Minecraft on Linux! In pretty much every scenario it runs very good, for servers, Clear Linux and RHEL are very well optimized, and for clients, CachyOS and Arch are amazing.
 
 - Make sure the Minecraft client is using your discrete GPU! Check the F3 tab, and force Minecraft to use it in the "**Windows Graphics Settings**", *not* the AMD/Nvidia control panel (as they don't seem to work anymore).
 
