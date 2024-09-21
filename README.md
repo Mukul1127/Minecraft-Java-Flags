@@ -38,8 +38,8 @@ While any Java Distributor will work just fine, you may run into compatibility i
 | Minecraft Version | Vanilla + Jarmods | Fabric + Related | Forge + Related |
 |-------------------|-------------------|------------------|-----------------|
 | 1.19.x and above  | Java 21           | Java 21          | Java 21         |
-| 1.16.x - 1.18.x   | Java 17           | Java 17          | Java 17         |
-| 1.14.x - 1.15.x   | Java 11           | Java 11          | Java 8          |
+| 1.15.x - 1.18.x   | Java 17           | Java 17          | Java 17         |
+| 1.14.x            | Java 11           | Java 11          | Java 8          |
 | 1.13.x and below  | Java 8            |       N/A        | Java 8          |
 
 <br>
