@@ -45,6 +45,8 @@ While any Java Distributor will work just fine, you must choose the corect versi
 | 1.12.2            | Java 23           | N/A              | Java 8 (Java 23 possible with [Cleanroom](https://github.com/CleanroomMC/Cleanroom)) |
 | 1.7.10            | Java 23           | N/A              | Java 8 (Java 23 possible with [lwjgl3ify](https://modrinth.com/mod/lwjgl3ify))       |
 
+[Legacy LWJGl3](https://modrinth.com/mod/moehreag-legacy-lwjgl3) also exists, but I have no idea if it supports running alongside Forge and I don't think anyone wants to use just Ornithe.
+
 <br>
 
 # Memory Allocation
