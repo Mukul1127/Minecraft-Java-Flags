@@ -35,12 +35,12 @@ If you dont know what to pick, I recommend GraalVM, Adoptium, or Azul Platform *
 # Picking the correct Java version
 While any Java Distributor will work just fine, you may run into compatibility issues depending on the java version you use. Refer to the following table to choose the correct version:
 
-| Minecraft Version: | Vanilla           | Modded             |
-|--------------------|-------------------|--------------------|
-| 1.20.5 and above   | Requires Java 21+ | Requires Java 21+  |
-| 1.17 to 1.20.4     | Requires Java 17+ | Requires Java 17+  |
-| 1.16               | Requires Java 8+  | May Require Java 8 |
-| 1.15 and below     | Only Java 8       | Only Java 8        |
+| Minecraft Version | Vanilla + Jarmods | Fabric + Related | Forge + Related |
+|-------------------|-------------------|------------------|-----------------|
+| 1.19.x and above  | Java 21           | Java 21          | Java 21         |
+| 1.16.x - 1.18.x   | Java 17           | Java 17          | Java 17         |
+| 1.14.x - 1.15.x   | Java 11           | Java 11          | Java 8          |
+| 1.13.x and below  | Java 8            |       N/A        | Java 8          |
 
 <br>
 
