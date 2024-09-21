@@ -196,7 +196,7 @@ Enabling large pages improves the performance of Minecraft servers and clients b
 > On Windows, you **must** run Java and your launcher as an administrator. This is a security risk, and you should skip this section if you aren't comfortable with that. That means checking the "run as administrator" compatibility checkbox for `javaw.exe`, `java.exe` and `your launcher.exe`, otherwise Large Pages will silently fail.
 
 > [!NOTE]
-> 1. Windows 10 Home doesn't have `gpedit.msc`, instead you can [PolicyPlus](https://github.com/Fleex255/PolicyPlus). It works the same, just do `File | Save Policies (Ctrl+S)` before exiting.
+> 1. Windows 10 Home doesn't have `gpedit.msc`, instead you can [PolicyPlus](https://github.com/Fleex255/PolicyPlus). It works the same, just before following the guide, run `Help | Acquire ADMX Files`, and run `File | Save Policies (Ctrl+S)` before exiting.
 > 
 > 2. On Linux, you generally want to use `-XX:+UseTransparentHugePages`.
 
