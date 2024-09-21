@@ -20,15 +20,15 @@ Java runtimes from Azul or Microsoft, Adoptium, Amazon and so on are all basical
 
 1. **GraalVM**  - features a more aggressive Java compiler.
 
-2. **Clear Linux OpenJDK**  - highly compatible OpenJDK base with it's build process and dependencies [optimized for newer CPUs](https://www.phoronix.com/review/zen4-clear-linux/2).
+2. **Clear Linux OpenJDK**  - uses a highly compatible OpenJDK base with it's build process and dependencies [optimized for newer CPUs](https://www.phoronix.com/review/zen4-clear-linux/2).
 
-3. **Platform Prime** - *very* fast since it hooks into llvm, but is currently incompatible with most mods and Linux-only.
+3. **Platform Prime** - ***very*** fast since it hooks into llvm, but is currently incompatible with most mods and Linux-only.
 
-4. **Red Hat Java 8** - has the Shenandoah garbage collector (It is the only Java 8 with it).
+4. **Red Hat Java 8** - has the Shenandoah garbage collector (It is the only Java 8 JDK with it).
 
-5. **OpenJ9** - Consumes less memory at the cost of being *much* slower in Minecraft. It also uses totally different flags than any other Java build. This option is unrecommended
+5. **OpenJ9** - consumes less memory at the cost of being *much* slower in Minecraft. It also uses totally different flags than any other Java build. This option is unrecommended.
 
-If you dont know what to pick, I recommend GraalVM or Adoptium. You can download most of the good OpenJDK based ones from [here](https://adoptium.net/marketplace/), and you can download GraalVM from [here](https://www.graalvm.org/downloads/).
+If you dont know what to pick, I recommend GraalVM, Adoptium, or Azul Platform ***Core***. You can download most of the good OpenJDK based ones from [here](https://adoptium.net/marketplace/), and you can download GraalVM from [here](https://www.graalvm.org/downloads/).
 
 <br>
 
