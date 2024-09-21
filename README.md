@@ -6,7 +6,7 @@
 
 <br>
 
-Welcome! this is a guide to tune Java for Minecraft.
+Welcome! this is a guide to (AGGRESSIVELY) tune Java for Minecraft.
 
 > [!NOTE]
 > 1. While these tweaks notably reduce some server and client stutters, expect only modest TPS gains + minimal FPS gains at best, and somewhat increased RAM + CPU usage.
