@@ -35,14 +35,14 @@ If you dont know what to pick, I recommend GraalVM, Adoptium, or Azul Platform *
 # Picking the correct Java version
 While any Java Distributor will work just fine, you must choose the corect version, though trial and error, I have determined that this table shows the latest version of java that each version of the game can run.
 
-| Minecraft Version | Vanilla + Jarmods | Fabric + Related | Forge + Related                                                                                                  |
-|-------------------|-------------------|------------------|------------------------------------------------------------------------------------------------------------------|
-| 1.19.x and above  | Java 23           | Java 23          | Java 23                                                                                                          |
-| 1.16.x - 1.18.x   | Java 23           | Java 23          | Java 23                                                                                                          |
-| 1.15.x            | Java 23           | Java 23          | Java 11                                                                                                          |
-| 1.14.x            | Java 23           | Java 21          | Java 8                                                                                                           |
-| 1.13.x and below  | Java 23           | N/A              | Java 8                                                                                                           |
-| 1.12.x - 1.7.10   | Java 23           | N/A              | Java 8 (Java 23 Possible with [lwjgl3ify](https://github.com/Mukul1127/Minecraft-Java-Flags/edit/main/README.md))|
+| Minecraft Version | Vanilla + Jarmods | Fabric + Related | Forge + Related                                                                                                            |
+|-------------------|-------------------|------------------|----------------------------------------------------------------------------------------------------------------------------|
+| 1.19.x and above  | Java 23           | Java 23          | Java 23                                                                                                                    |
+| 1.16.x - 1.18.x   | Java 23           | Java 23          | Java 23                                                                                                                    |
+| 1.15.x            | Java 23           | Java 23          | Java 11                                                                                                                    |
+| 1.14.x            | Java 23           | Java 21          | Java 8                                                                                                                     |
+| 1.13.x and below  | Java 23           | N/A              | Java 8                                                                                                                     |
+| 1.12.x - 1.7.10   | Java 23           | N/A              | Java 8 (Java 23 possible on 1.7.10 with [lwjgl3ify](https://github.com/Mukul1127/Minecraft-Java-Flags/edit/main/README.md))|
 
 <br>
 
