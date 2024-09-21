@@ -192,9 +192,6 @@ No other "threading" flags like `ParallelGCThreads` or `JVMCIThreads` are necess
 # Large Pages
 Enabling large pages improves the performance of Minecraft servers and clients by reducing the load on your system. [Here's a good guide](https://kstefanj.github.io/2021/05/19/large-pages-and-java.html)
 
-> [!CAUTION]
-> On Windows, you **must** run Java and your launcher as an administrator. This is a security risk, and you should skip this section if you aren't comfortable with that. That means checking the "run as administrator" compatibility checkbox for `javaw.exe`, `java.exe` and `your launcher.exe`, otherwise Large Pages will silently fail.
-
 > [!NOTE]
 > 1. Windows Home doesn't have `gpedit.msc` and thus, can't follow the guide above, intead use [this guide](https://awesomeprojectsxyz.blogspot.com/2017/11/windows-10-home-how-to-enable-lock.html?m=1), also since microsoft took down the tool in mention, you have to download it from [here](https://gist.github.com/eyecatchup/0107bab3d92473cb8a3d3547848fc442).
 > 
@@ -234,11 +231,11 @@ After launching Minecraft, set Java to run at an "Realtime" process priority in 
 Linux users can add  `sudo nice -n -19` to the beginning of the launch command.
 
 > [!CAUTION]
-> On Linux, nice levels below 0 (with the "max" being -20) require running Minecraft as `root`. This is a security risk, and you should skip this section if you aren't comfortable with that.
+> On Linux, nice levels below 0 (with the "max" being -20) require running nice as `root` which in turn runs Minecraft as `root`. This is a security risk.
 > Workarounds:
-> 1. Start game and run `renice` instead with the pid of the minecraft instance.
-> 2. Modify `/etc/security/limits.conf` to allow non-root users to go to -19.
-> 3. "Hacky" way to script it: `sudo nice -n -19 su <username> -c`
+> 1. Start game and run `renice` as `root` instead with the pid of the minecraft instance. This is safe as Minecraft itself is not running as `root`.
+> 2. Modify `/etc/security/limits.conf` to allow non-root users to go to -19. Then just use the normal nice command without `sudo`.
+> 3. "Hacky" way to script it: `sudo nice -n -19 su <username> -c`. The easiest way but the first 2 are probably better.
 
 <br/>
 
