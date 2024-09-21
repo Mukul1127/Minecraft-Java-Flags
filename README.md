@@ -41,7 +41,8 @@ While any Java Distributor will work just fine, you may run into compatibility i
 | 1.16.x - 1.18.x   | Java 23           | Java 23          | Java 23         |
 | 1.15.x            | Java 23           | Java 23          | Java 11         |
 | 1.14.x            | Java 23           | Java 21          | Java 8          |
-| 1.13.x and below  | Java 8            | N/A              | Java 8          |
+| 1.13.x and below  | Java 23           | N/A              | Java 8          |
+| 1.12.x - 1.7.10   | Java 23           | N/A              | Java 8          |
 
 <br>
 
