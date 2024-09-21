@@ -113,7 +113,7 @@ Non-Proactive ZGC is great for high memory/high core count servers. It has no se
 > 
 > 3. Allocate more RAM and more `ConcGCThreads` than you normally would for other GC.
 > 
-> 4. ZGC does not play well with `AllocatePrefetchStyle=3`, hence setting it to 1 overrides the previous entry. Remove the old one if you want.
+> 4. ZGC doesn't support `AllocatePrefetchStyle=3`, hence setting it to 1 overrides the previous entry. Remove the old one if you want.
 
 <br/>
 
@@ -128,7 +128,7 @@ Generational ZGC is new, so no one has really tested it, though I would assume i
 > 
 > 2. Allocate more RAM and more `ConcGCThreads` than you normally would for other GC.
 > 
-> 3. ZGC does not like `AllocatePrefetchStyle=3`, hence setting it to 1 overrides the previous entry. Remove the old one if you want.
+> 3. ZGC doesn't support `AllocatePrefetchStyle=3`, hence setting it to 1 overrides the previous entry. Remove the old one if you want.
 >
 > 4. GraalVM currently doesn't fully support Generational ZGC as it disables an important optimization (`-XX:+EnableJVMCI`)
 
@@ -143,9 +143,9 @@ Shenandoah performs well on clients, but kills server throughput. Enable it with
 See more tuning options [here](https://wiki.openjdk.org/display/shenandoah/Main). The "herustic" and "mode" options don't change much (except for "compact," which you should not use). 
 
 > [!NOTE]
-> 1. Red Hat OpenJDK 8 is the only Java 8 that supports Shenandoah.
+> 1. Red Hat OpenJDK 8 is the only Java 8 JDK that supports Shenandoah.
 > 
-> 2. Shenandoah does not like `AllocatePrefetchStyle=3`, hence setting it to 1 overrides the previous entry. Remove the old one if you want.
+> 2. Shenandoah doesn't support `AllocatePrefetchStyle=3`, hence setting it to 1 overrides the previous entry. Remove the old one if you want.
 >
 > 3. GraalVM currently doesn't support Shenandoah.
 
@@ -160,7 +160,7 @@ These are similar to the Aikar flags, but with shorter, more frequent pauses, le
 ```
 
 > [!NOTE]
-> 1. Java 21 removed support for the `G1ConcRefinementServiceIntervalMillis` flag and the `-XX:G1ConcRSHotCardLimit=16` flag. Remove them if you want.
+> 1. Java 21+ no longer supports `G1ConcRefinementServiceIntervalMillis` flag and the `-XX:G1ConcRSHotCardLimit=16` flag. Remove them if you want as they will just be ignored.
 > 
 > 2. `G1NewSizePercent` and `MaxGCPauseMillis` can be used to tune the frequency/dureation of your young generation collections. `G1HeapWastePercent=18` should be removed if you are getting any old generation pauses on your setup. Alternatively, you can raise it and set `G1MixedGCCountTarget` to 2 or 1 to make mixed garbage collection even lazier (at the cost of higher memory usage). 
 
@@ -174,7 +174,7 @@ Longer pauses are more acceptable on servers. These flags are very close to the 
 ```
 
 > [!NOTE]
-> 1. Java 21 removed support for the `G1ConcRefinementServiceIntervalMillis` flag and the `-XX:G1ConcRSHotCardLimit=16` flag. Remove them if you want.
+> 1. Java 21+ no longer supports `G1ConcRefinementServiceIntervalMillis` flag and the `-XX:G1ConcRSHotCardLimit=16` flag. Remove them if you want as they will just be ignored.
 > 
 > 2. `G1NewSizePercent` and `MaxGCPauseMillis` can be used to tune the frequency/dureation of your young generation collections. `G1HeapWastePercent=18` should be removed if you are getting any old generation pauses on your setup. Alternatively, you can raise it and set `G1MixedGCCountTarget` to 2 or 1 to make mixed garbage collection even lazier (at the cost of higher memory usage). 
 
@@ -183,9 +183,9 @@ Longer pauses are more acceptable on servers. These flags are very close to the 
 ### Garbage Collection Threading
 `-XX:ConcGCThreads=[Some Number]` controls the [*maximum* number](https://github.com/openjdk/jdk/blob/dd34a4c28da73c798e021c7473ac57ead56c9903/src/hotspot/share/gc/z/zHeuristics.cpp#L96-L104) of background threads the garbage collector is allowed to use, and defaults to `[number of logical (hyperthreaded) cores / 4]`. Recent versions of Java will [reduce the number of gc threads, if needed](https://wiki.openjdk.org/display/zgc/Main#Main-SettingConcurrentGCThreads).
 
-In some cases (especially with ZGC or Shenandoh) you want to increase this thread cap past the default. I recommend `[number of REAL (non-hyperthreaded) cores - 2]` on most CPUs, but you may need to play with this parameter. If its too low, garbage collection can't keep up with Minecraft, and the game will stutter and/or start eating gobs of RAM and crash. If its too high, it might slow the game down, especially if you are running Java 8. 
+In some cases (especially with ZGC or Shenandoh) you want to increase this thread cap past the default. I recommend `[number of REAL (non-hyperthreaded) cores - 2]` on most CPUs, but you may need to play with this parameter. If its too low, garbage collection can't keep up with Minecraft, and the game will stutter and/or start eating gobs of RAM and crash. If its too high, it might slow the game down, especially if you are running Java 8. Probably keep it under 8 (you can maybe get away with 10 for ZGC).
 
-No other "threading" flags like `ParallelGCThreads` or `JVMCIThreads` are necessary.
+No other "threading" flags like `ParallelGCThreads` or `JVMCIThreads` are necessary, as they are enabled by default with good automatic settings in Java 8+.
 
 <br/>
 
