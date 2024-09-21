@@ -33,7 +33,7 @@ If you dont know what to pick, I recommend GraalVM, Adoptium, or Azul Platform *
 <br>
 
 # Picking the correct Java version
-While any Java Distributor will work just fine, you may run into compatibility issues depending on the java version you use. Refer to the following table to choose the correct version:
+While any Java Distributor will work just fine, you must choose the corect version, though trial and error, I have determined that this table shows the latest version of java that each version of the game can run.
 
 | Minecraft Version | Vanilla + Jarmods | Fabric + Related | Forge + Related |
 |-------------------|-------------------|------------------|-----------------|
