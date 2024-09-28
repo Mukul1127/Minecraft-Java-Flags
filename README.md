@@ -6,7 +6,7 @@
 
 <br>
 
-Welcome! this is a guide to ***(Pretty Aggressively)*** tune Java for Minecraft.
+Welcome! this is a guide to tune Java for Minecraft.
 
 > [!NOTE]
 > 1. While these tweaks notably reduce some server and client stutters, expect only modest TPS gains + minimal FPS gains at best, and somewhat increased RAM + CPU usage.
@@ -33,19 +33,11 @@ If you dont know what to pick, I recommend GraalVM, Adoptium, or Azul Platform *
 <br>
 
 # Picking the correct Java version
-While any Java Distributor will work just fine, you must choose the corect version, though trial and error, I have determined that this table shows the latest version of java that each version of the game can run.
+While any Java Distributor will work just fine, you should choose the correct java version for your game version. You can check the correct version using the [Minecraft Wiki](https://minecraft.wiki/). Just search your game version with "Java Edition" at the beginning and check the "Minimum Java Version".
 
-| Minecraft Version | Vanilla + Jarmods | Fabric + Related | Forge + Related                                                                      |
-|-------------------|-------------------|------------------|--------------------------------------------------------------------------------------|
-| 1.19.x and above  | Java 23           | Java 23          | Java 23                                                                              |
-| 1.16.x - 1.18.x   | Java 23           | Java 23          | Java 23                                                                              |
-| 1.15.x            | Java 23           | Java 23          | Java 11                                                                              |
-| 1.14.x            | Java 23           | Java 21          | Java 8                                                                               |
-| 1.13.x and below  | Java 23           | N/A              | Java 8                                                                               |
-| 1.12.2            | Java 23           | N/A              | Java 8 (Java 23 possible with [Cleanroom](https://github.com/CleanroomMC/Cleanroom)) |
-| 1.7.10            | Java 23           | N/A              | Java 8 (Java 21 possible with [lwjgl3ify](https://modrinth.com/mod/lwjgl3ify))       |
+Example:
 
-[Legacy LWJGL3](https://modrinth.com/mod/moehreag-legacy-lwjgl3) also exists, but I don't know if it supports running alongside Forge and that might be a deal breaker for some people as Forge is ***much*** more popular.
+![Java Version](javaVersion.png)
 
 <br>
 
