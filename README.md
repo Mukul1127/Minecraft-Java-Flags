@@ -194,6 +194,8 @@ Enabling large pages improves the performance of Minecraft servers and clients b
 > 
 > 2. On Linux, you generally want to use `-XX:+UseTransparentHugePages`.
 
+Add `-XX:+UseLargePages -XX:LargePageSizeInBytes=2m` to your arguments.
+
 Check and see if large pages is working with the `-Xlog:gc+init` java argument in Java 17. 
 
 In any Java version/platform, if large pages isn't working, you will get a warning in the log similar to this: 
