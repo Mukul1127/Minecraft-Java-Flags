@@ -112,7 +112,7 @@ Non-Proactive ZGC is great for high memory/high core count servers. It has no se
 
 <br/>
 
-### Generational ZGC (New and not well tested!)
+### Generational ZGC
 Generational ZGC is great for high memory/high core count servers and is made to be competitive with the only other Generation GC, G1GC. Enable it with
 ```
 -XX:+UseZGC -XX:AllocatePrefetchStyle=1 -XX:+ZGenerational
@@ -124,6 +124,8 @@ Generational ZGC is great for high memory/high core count servers and is made to
 > 2. Allocate more RAM and more `ConcGCThreads` than you normally would for other GC.
 >
 > 3. GraalVM currently disables EnableJVMCI when using ZGC since it doesn't support it.
+>
+> 4. Java 23+ no longer requires `-XX:+ZGenerational` flag. Remove it if you want as it will just be ignored since Generational is the new default.
 
 <br/>
 
@@ -151,7 +153,7 @@ These are similar to the Aikar flags, but with shorter, more frequent pauses, le
 ```
 
 > [!NOTE]
-> 1. Java 21+ no longer supports `G1ConcRefinementServiceIntervalMillis` flag and the `-XX:G1ConcRSHotCardLimit=16` flag. Remove them if you want as they will just be ignored.
+> 1. Java 21+ no longer supports `-XX:G1ConcRefinementServiceIntervalMillis=150` flag and the `-XX:G1ConcRSHotCardLimit=16` flag. Remove them if you want as they will just be ignored.
 > 
 > 2. `G1NewSizePercent` and `MaxGCPauseMillis` can be used to tune the frequency/dureation of your young generation collections. `G1HeapWastePercent=18` should be removed if you are getting any old generation pauses on your setup. Alternatively, you can raise it and set `G1MixedGCCountTarget` to 2 or 1 to make mixed garbage collection even lazier (at the cost of higher memory usage).
 >
@@ -167,7 +169,7 @@ Longer pauses are more acceptable on servers. These flags are very close to the 
 ```
 
 > [!NOTE]
-> 1. Java 21+ no longer supports `G1ConcRefinementServiceIntervalMillis` flag and the `-XX:G1ConcRSHotCardLimit=16` flag. Remove them if you want as they will just be ignored.
+> 1. Java 21+ no longer supports `-XX:G1ConcRefinementServiceIntervalMillis=150` flag and the `-XX:G1ConcRSHotCardLimit=16` flag. Remove them if you want as they will just be ignored.
 > 
 > 2. `G1NewSizePercent` and `MaxGCPauseMillis` can be used to tune the frequency/dureation of your young generation collections. `G1HeapWastePercent=18` should be removed if you are getting any old generation pauses on your setup. Alternatively, you can raise it and set `G1MixedGCCountTarget` to 2 or 1 to make mixed garbage collection even lazier (at the cost of higher memory usage). 
 >
