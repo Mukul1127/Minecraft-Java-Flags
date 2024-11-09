@@ -113,7 +113,7 @@ Non-Proactive ZGC is great for high memory/high core count servers. It has no se
 <br/>
 
 ### Generational ZGC (New and not well tested!)
-Generational ZGC is new, so no one has really tested it, though I would assume it's similar to Proactive ZGC, except it also apparently runs well-ish on clients? Enable it with
+Generational ZGC is great for high memory/high core count servers and is made to be competitive with the only other Generation GC, G1GC. Enable it with
 ```
 -XX:+UseZGC -XX:AllocatePrefetchStyle=1 -XX:+ZGenerational
 ```
@@ -335,6 +335,8 @@ If you want a up-to-date Optifine replacement, you can instead take a look at [F
 - [research.spec.org/icpe_proceedings/2014/p111.pdf](https://research.spec.org/icpe_proceedings/2014/p111.pdf)
 
 - [diva-portal.org/smash/get/diva2:1466940/FULLTEXT01.pdf](https://www.diva-portal.org/smash/get/diva2:1466940/FULLTEXT01.pdf)
+
+- [r/feedthebeast/comments/1dlwmqu](https://www.reddit.com/r/feedthebeast/comments/1dlwmqu/g1gc_still_better_than_generational_zgc/)
 
 - [malloc.se/blog/zgc-jdk17](https://malloc.se/blog/zgc-jdk17)
 
