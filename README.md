@@ -107,6 +107,8 @@ Non-Proactive ZGC is great for high memory/high core count servers. It has no se
 > 2. Non-Proactive ZGC is unavailable in Java 8 and much less performant in Java 11 than it is in Java 17+.
 > 
 > 3. Allocate more RAM and more `ConcGCThreads` than you normally would for other GC.
+>
+> 4. GraalVM currently disables EnableJVMCI when using ZGC since it doesn't support it. 
 
 <br/>
 
@@ -121,7 +123,7 @@ Generational ZGC is new, so no one has really tested it, though I would assume i
 > 
 > 2. Allocate more RAM and more `ConcGCThreads` than you normally would for other GC.
 >
-> 3. GraalVM currently doesn't fully support Generational ZGC as it disables an important optimization (`-XX:+EnableJVMCI`)
+> 3. GraalVM currently disables EnableJVMCI when using ZGC since it doesn't support it.
 
 <br/>
 
