@@ -189,7 +189,7 @@ No other "threading" flags like `ParallelGCThreads` or `JVMCIThreads` are necess
 # Large Pages
 
 > [!CAUTION]
-> On Windows 10 and above, it seems that large pages don't actually need administrator privileges when it was previously though that it did. Source showing this: https://sourceforge.net/p/sevenzip/discussion/45797/thread/d3ee3821b0/. I tested it myself and Java seems to runs just fine. Be careful though and don't just keep Minecraft running as administrator as this is a security risk. You should skip this section if you aren't comfortable with any of this.
+> Some guides say that you must run Java and your launcher as administrator on Windows. This has been proven wrong and is a MAJOR SECURITY RISK.
 
 Enabling large pages improves the performance of Minecraft servers and clients by reducing the load on your system. [Here's a good guide](https://kstefanj.github.io/2021/05/19/large-pages-and-java.html)
 
@@ -343,3 +343,5 @@ If you want a up-to-date Optifine replacement, you can instead take a look at [F
 - [malloc.se/blog/zgc-jdk17](https://malloc.se/blog/zgc-jdk17)
 
 - [docs.oracle.com/javase/8/embedded/develop-apps-platforms/codecache](https://docs.oracle.com/javase/8/embedded/develop-apps-platforms/codecache.htm)
+
+- https://github.com/brucethemoose/Minecraft-Performance-Flags-Benchmarks/issues/57
