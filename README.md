@@ -247,23 +247,21 @@ Linux users can add  `sudo nice -n -10` to the beginning of the launch command.
 If you want pure performance, don't use Optifine. There are better performing mods like [Sodium](https://modrinth.com/mod/sodium). Sodium also supports Fabric natively (unlike Optifine) and the 0.6 beta supports NeoForge aswell.
 
 A Good Example with all the performance mods you'll need it [Simply Optimized](https://modrinth.com/modpack/sop).
-> [!NOTE]
-> It seems that Simply Optimized's list of mods in the description is out of date, instead check what mods come with the version of the modpack you are downloading.
 
 If you want a up-to-date Optifine replacement, you can instead take a look at [Fabulously Optimized](https://modrinth.com/modpack/fabulously-optimized).
 
 <br/>
 
 # Other Performance Tips
-- Run your Minecraft on Linux! In pretty much every scenario it runs very good, for servers, Clear Linux and RHEL are very well optimized, and for clients, CachyOS and Arch are amazing.
+- Run Minecraft on Linux! In pretty much every scenario it runs very good, for servers, Clear Linux and RHEL are very well optimized, and for clients, CachyOS/Arch is amazing.
 
 - Make sure the Minecraft client is using your discrete GPU! Check the F3 tab, and force Minecraft to use it in the "**Windows Graphics Settings**", *not* the AMD/Nvidia control panel (as they don't seem to work anymore).
 
-- Minecraft client Linux users should research running Minecraft natively on wayland if you use it.
+- Linux wayland users should research running Minecraft natively on wayland instead of through xwayland.
 
 - Close everything in the background, including Discord, game launchers and your browser! Minecraft is resource intensive, and does not like other apps generating CPU interrupts or eating disk I/O, RAM and so on.
 
-- Server owners can check this out: [YouHaveTrouble/minecraft-optimization](https://github.com/YouHaveTrouble/minecraft-optimization).
+- Optimize your server, don't use the official server, heres a guide that seems good: [YouHaveTrouble/minecraft-optimization](https://github.com/YouHaveTrouble/minecraft-optimization).
 
 <br/>
 
