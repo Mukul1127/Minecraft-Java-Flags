@@ -237,7 +237,7 @@ Linux users can add  `sudo nice -n -10` to the beginning of the launch command.
 > On Linux, nice levels below 0 (with the "max" being -20) require running nice as `root` which in turn runs Minecraft as `root`. This is a security risk. Here are some Workarounds:
 > 1. Start game and run `renice -10 -p $(PID)` as `root` instead with the pid of the minecraft instance. This is safe as Minecraft itself is not running as `root`.
 > 
-> 2. Modify `/etc/security/limits.conf` to allow non-root users to go to -19. Then just use the normal nice command without `sudo`.
+> 2. Modify `/etc/security/limits.conf` to allow non-root users to go to negatives. Then just use the normal nice command without `sudo`. Don't do this one if you don't know what you are doing.
 > 
 > 3. "Hacky" way to script it: `sudo nice -n -10 su <username> -c`. The easiest way but the first 2 are probably better.
 
