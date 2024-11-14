@@ -198,7 +198,7 @@ No other "threading" flags like `ParallelGCThreads` or `JVMCIThreads` are necess
 # Large Pages
 
 > [!CAUTION]
-> Some guides say that you must run Java and your launcher as administrator on Windows. This has been proven wrong and is a MAJOR SECURITY RISK.
+> Some guides say that you must run Java and your launcher as administrator on Windows. This has been shown wrong and is a MAJOR SECURITY RISK.
 
 Enabling large pages improves the performance of Minecraft servers and clients by reducing the load on your system. [Here's a good guide](https://kstefanj.github.io/2021/05/19/large-pages-and-java.html)
 
@@ -266,7 +266,7 @@ Linux users can add  `sudo nice -n -10` to the beginning of the launch command.
 <br/>
 
 # Frequently Asked Questions
-- Java tweaks improve server performance and client stuttering, but they don't boost average client FPS much (if at all). For that, running [correct/up-to-date graphics drivers](https://github.com/CaffeineMC/sodium-fabric/wiki/Driver-Compatibility) and [performance mods](https://github.com/TheUsefulLists/UsefulMods) is far more important.
+- Java tweaks improve server performance and client stuttering, but they don't boost average client FPS much (if at all). For that, running [correct/up-to-date graphics drivers](https://github.com/CaffeineMC/sodium-fabric/wiki/Driver-Compatibility) helps.
 
 - IBM's OpenJ9 does indeed save RAM, as its reputation would suggest, but is over 30% slower at server chunkgen in my tests. If there are any flags that make it competitive with OpenJDK, please let me know on Discord or make a issue.
 
