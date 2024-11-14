@@ -35,14 +35,14 @@ Java runtimes from Azul or Microsoft, Adoptium, Amazon and so on are all basical
 
 4. **Red Hat Java 8** - has the Shenandoah garbage collector (It is the only Java 8 JDK with it).
 
-5. **OpenJ9** - consumes less memory at the cost of being *much* slower in Minecraft. It also uses totally different flags than any other Java build. This option is unrecommended.
+5. **OpenJ9** - consumes less memory at the cost of being *much* slower in Minecraft. It also uses totally different flags than any other Java build.
 
-If you dont know what to pick, I recommend GraalVM, Adoptium, or Azul Platform ***Core***. You can download most of the good OpenJDK based ones from [here](https://adoptium.net/marketplace/), and you can download GraalVM from [here](https://www.graalvm.org/downloads/).
+If you dont know what to pick, I recommend GraalVM or Adoptium. You can download Adoptium from [here](https://adoptium.net/temurin/releases), and you can download GraalVM from [here](https://www.graalvm.org/downloads).
 
 <br>
 
 # Picking the correct Java version
-While any Java Distributor will work just fine, you should choose the correct java version for your game version. You can check the correct version using the [Minecraft Wiki](https://minecraft.wiki/). Just search your game version with "Java Edition" at the beginning and check the "Minimum Java Version".
+While any Java Distributor will work just fine, you should choose the correct java version for your game version. You can check the correct version using the [Minecraft Wiki](https://minecraft.wiki). Just search your game version with "Java Edition" at the beginning and check the "Minimum Java Version".
 
 Example:
 
@@ -264,82 +264,3 @@ Linux users can add  `sudo nice -n -10` to the beginning of the launch command.
 - Optimize your server, don't use the official server, heres a guide that seems good: [YouHaveTrouble/minecraft-optimization](https://github.com/YouHaveTrouble/minecraft-optimization).
 
 <br/>
-
-# Frequently Asked Questions
-- Java tweaks improve server performance and client stuttering, but they don't boost average client FPS much (if at all). For that, running [correct/up-to-date graphics drivers](https://github.com/CaffeineMC/sodium-fabric/wiki/Driver-Compatibility) helps.
-
-- IBM's OpenJ9 does indeed save RAM, as its reputation would suggest, but is over 30% slower at server chunkgen in my tests. If there are any flags that make it competitive with OpenJDK, please let me know on Discord or make a issue.
-
-<br/>
-
-# Flag Explanations
-- Aikar G1GC flags are explained [here](https://aikar.co/2018/07/02/tuning-the-jvm-g1gc-garbage-collector-flags-for-minecraft/)
-
-- `-XX:+UnlockExperimentalVMOptions -XX:+UnlockDiagnosticVMOptions` simply unlock more flags to be used. These can be listed with the `-XX:+PrintFlagsFinal` and `-XX:+JVMCIPrintProperties` flags.
-
-- `-XX:G1MixedGCCountTarget=3`: This is how many oldgen GC blocks to target in "mixed" GC. These mixed collections are much slower, and the Minecraft client doesn't generate oldgen very quickly, so we can lower this value to 3, 2, or even 1 for shorter GC pauses.
-
-- `-XX:-DontCompileHugeMethods` *Allows* huge methods to be compiled. Modded Minecraft has some of these, and we don't care about higher background compiler CPU usage.
-
-- `-XX:MaxNodeLimit=240000 -XX:NodeLimitFudgeFactor=8000` Enable optimization of larger methods. See [Java Bug #8058148](https://bugs.java.com/bugdatabase/view_bug.do?bug_id=8058148).
-
-- `-XX:ReservedCodeCacheSize=400M -XX:NonNMethodCodeHeapSize=12M -XX:ProfiledCodeHeapSize=194M -XX:NonProfiledCodeHeapSize=194M` reserves more space for compiled code. All sections must "add up" to `ReservedCodeCacheSize`. I have observed modded Minecraft run into the default 250 megabyte limit with `XX:+PrintCodeCache`, but even if its not filled, the larger size makes eviction of compiled code less aggressive.
-
-- `-XX:NmethodSweepActivity=1` (default 10) keeps "cold" code in the cache for a longer time. There is no risk of "filling up" the code cache either, as cold code is more aggressively removed as it fills up.
-
-- ~~`-XX:+UseStringDeduplication`~~ This is a popular option, but not used here, as it's benching slower. Maybe its useful on low memory systems?
-
-- `-XX:+UseFastUnorderedTimeStamps` Avoid system calls for getting the time. The impact of this will vary per system, but we aren't really concerned with logging timestamp accuracy.
-
-- `-XX:+UseCriticalJavaThreadPriority` *Nothing* should preempt the Minecraft threads. GC and Compiler threads can wait.
-
-- `-XX:ThreadPriorityPolicy=1` Use a wider range of thread priorities. Requires sudo on linux to work. Some JDKs (like Graal) enable this by default, but some don't.
-
-- `-XX:G1SATBBufferEnqueueingThresholdPercent=30 -XX:G1ConcMarkStepDurationMillis=5 -XX:G1ConcRefinementServiceIntervalMillis=150`: Optimizes G1GC's concurrent collection threads, still being tested [here](https://research.spec.org/icpe_proceedings/2014/p111.pdf).
-
-- `-XX:G1RSetUpdatingPauseTimePercent=0`: We want *all* this work to be done in the G1GC concurrent threads, not the pauses.
-
-- `-XX:G1HeapWastePercent=18` Don't bother collecting from old gen until its above this percent. This avoids triggering slower "mixed" young generation GCs, which is fine since Minecraft (with sufficient memory) doesn't fill the old gen that fast. Idea from [r/Minecraft/comments/k9zb7m](https://www.reddit.com/r/Minecraft/comments/k9zb7m/tuning_jvm_gc_for_singleplayer/).
-
-- `-XX:GCTimeRatio=99` As a goal, 1% of CPU time should be spent on garbage collection. Default is 12, which seems way too low. The default for Java 8 was 99.
-
-- `-XX:AllocatePrefetchStyle=3` Generate one prefetch instruction per cache line. More aggressive prefetching is generally useful on newer CPUs with large caches. It seems to break ZGC. See [OpenJDK's macro.cpp](https://github.com/openjdk/jdk/blob/bd90c4cfa63ba2de26f7482ed5d1704f9be9629f/src/hotspot/share/opto/macro.cpp#L1806).
-
-- `-Dgraal.LoopRotation=true` A non default optimization, will probably be default soon.
-
-- `-Dgraal.TuneInlinerExploration=1` Spend more time making inlining decisions. For Minecraft, we want the C2 compiler to be as slow and aggressive as possible.
-
-- Most other `-Dgraal` arguments are enabled by default, and are either there as a sanity check, for debugging or as a failsafe (if, for instance, someone unknowingly disables JVCMI with some other flag).
-
-- Many Java 8 flags (such as `-XX:MaxInlineLevel=15 -XX:MaxVectorSize=32`) are just copied from the Java 17 defaults. Others (like `+AggressiveOpts`) are only non-default in some older Java 8 builds.
-
-<br>
-
-# Unmentioned Sources
-- Updated Aikar flags from this repo: [etil2jz/etil-minecraft-flags](https://github.com/etil2jz/etil-minecraft-flags)
-
-- Reddit post from a Forge dev: [r/feedthebeast/comments/5jhuk9](https://www.reddit.com/r/feedthebeast/comments/5jhuk9/modded_mc_and_memory_usage_a_history_with_a)
-
-- GraalVM release notes: [graalvm.org/release-notes](https://www.graalvm.org/release-notes)
-
-- Oracle's Java 17 Documentation: [docs.oracle.com/en/java/javase/17/docs/specs/man/java](https://docs.oracle.com/en/java/javase/17/docs/specs/man/java.html)
-
-- VM Options explorer: [chriswhocodes.com](https://chriswhocodes.com)
-
-- Java itself, via the `-XX:+PrintFlagsFinal` and the `-XX:+JVMCIPrintProperties` flags to dump flag descriptions/defaults.
-
-- OpenJDK source: [openjdk/jdk](https://github.com/openjdk/jdk/)
-
-- Testing from @keyboard.tn in Discord.
-
-- [research.spec.org/icpe_proceedings/2014/p111.pdf](https://research.spec.org/icpe_proceedings/2014/p111.pdf)
-
-- [diva-portal.org/smash/get/diva2:1466940/FULLTEXT01.pdf](https://www.diva-portal.org/smash/get/diva2:1466940/FULLTEXT01.pdf)
-
-- [r/feedthebeast/comments/1dlwmqu](https://www.reddit.com/r/feedthebeast/comments/1dlwmqu/g1gc_still_better_than_generational_zgc/)
-
-- [malloc.se/blog/zgc-jdk17](https://malloc.se/blog/zgc-jdk17)
-
-- [docs.oracle.com/javase/8/embedded/develop-apps-platforms/codecache](https://docs.oracle.com/javase/8/embedded/develop-apps-platforms/codecache.htm)
-
-- https://github.com/brucethemoose/Minecraft-Performance-Flags-Benchmarks/issues/57
