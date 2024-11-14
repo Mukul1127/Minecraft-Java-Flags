@@ -15,6 +15,15 @@ Welcome! this is a guide to tune Java for Minecraft.
 
 <br>
 
+# Performance Mods
+You might be thinking ***"This is weird, why are performance mods here?"*** but performance mods will increase your performance more than any Java flags could, but if you want pure performance, don't just use Optifine. There are better performing mods like [Sodium](https://modrinth.com/mod/sodium). Sodium also supports Fabric natively (unlike Optifine) and the 0.6 beta supports NeoForge aswell.
+
+For pure performance, you can take a look at [Simply Optimized](https://modrinth.com/modpack/sop) and [Adrenaline](https://modrinth.com/modpack/adrenaline) for examples.
+
+If you want a up-to-date Optifine replacement on the other hand, [Fabulously Optimized](https://modrinth.com/modpack/fabulously-optimized) and [Additive](https://modrinth.com/modpack/additive) both mimic it very well with better performance and customizability.
+
+<br/>
+
 # Picking a Java Distributor
 Java runtimes from Azul or Microsoft, Adoptium, Amazon and so on are all basically identical as they are based on OpenJDK. Some notable exceptions are:
 
@@ -240,15 +249,6 @@ Linux users can add  `sudo nice -n -10` to the beginning of the launch command.
 > 2. Modify `/etc/security/limits.conf` to allow non-root users to go to negatives. Then just use the normal nice command without `sudo`. Don't do this one if you don't know what you are doing.
 > 
 > 3. "Hacky" way to script it: `sudo nice -n -10 su <username> -c`. The easiest way but the first 2 are probably better.
-
-<br/>
-
-# Performance Mods
-If you want pure performance, don't use Optifine. There are better performing mods like [Sodium](https://modrinth.com/mod/sodium). Sodium also supports Fabric natively (unlike Optifine) and the 0.6 beta supports NeoForge aswell.
-
-A Good Example with all the performance mods you'll need it [Simply Optimized](https://modrinth.com/modpack/sop).
-
-If you want a up-to-date Optifine replacement, you can instead take a look at [Fabulously Optimized](https://modrinth.com/modpack/fabulously-optimized).
 
 <br/>
 
