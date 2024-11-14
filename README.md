@@ -189,7 +189,7 @@ Longer pauses are more acceptable on servers. These flags are very close to the 
 ### Garbage Collection Threading
 `-XX:ConcGCThreads=[Some Number]` controls the [*maximum* number](https://github.com/openjdk/jdk/blob/dd34a4c28da73c798e021c7473ac57ead56c9903/src/hotspot/share/gc/z/zHeuristics.cpp#L96-L104) of background threads the garbage collector is allowed to use, and defaults to `[number of logical (hyperthreaded) cores / 4]`. Recent versions of Java will [reduce the number of gc threads, if needed](https://wiki.openjdk.org/display/zgc/Main#Main-SettingConcurrentGCThreads).
 
-In some cases (especially with ZGC or Shenandoh) you want to increase this thread cap past the default. I recommend `[number of REAL (non-hyperthreaded) cores - 2]` on most CPUs, but you may need to play with this parameter. If its too low, garbage collection can't keep up with Minecraft, and the game will stutter and/or start eating gobs of RAM and crash. If its too high, it might slow the game down, especially if you are running Java 8. Probably keep it under 8 (you can maybe get away with 10 for ZGC).
+In some cases (especially with ZGC or Shenandoah) you want to increase this thread cap past the default. I recommend `[number of REAL (non-hyperthreaded) cores - 2]` on most CPUs, but you may need to play with this parameter. If its too low, garbage collection can't keep up with Minecraft, and the game will stutter and/or start eating gobs of RAM and crash. If its too high, it might slow the game down, especially if you are running Java 8. Probably keep it under 8 (you can maybe get away with 10 for ZGC and Shenandoah).
 
 No other "threading" flags like `ParallelGCThreads` or `JVMCIThreads` are necessary, as they are enabled by default with good automatic settings in Java 8+.
 
@@ -260,7 +260,5 @@ Linux users can add  `sudo nice -n -10` to the beginning of the launch command.
 - Linux wayland users should research running Minecraft natively on wayland instead of through xwayland.
 
 - Close everything in the background, including Discord, game launchers and your browser! Minecraft is resource intensive, and does not like other apps generating CPU interrupts or eating disk I/O, RAM and so on.
-
-- Optimize your server, don't use the official server, heres a guide that seems good: [YouHaveTrouble/minecraft-optimization](https://github.com/YouHaveTrouble/minecraft-optimization).
 
 <br/>
