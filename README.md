@@ -29,7 +29,7 @@ Java runtimes from Azul or Microsoft, Adoptium, Amazon and so on are all basical
 
 1. **GraalVM**  - features a more aggressive Java compiler.
 
-2. **Clear Linux OpenJDK**  - uses a highly compatible OpenJDK base with it's build process and dependencies [optimized for newer CPUs](https://www.phoronix.com/review/zen4-clear-linux/2).
+2. **Clear Linux OpenJDK**  - uses a highly compatible OpenJDK base but it's build process and dependencies are [optimized for newer CPUs](https://www.phoronix.com/review/zen4-clear-linux/2).
 
 3. **Platform Prime** - ***very*** fast since it hooks into llvm, but is currently incompatible with most mods and Linux-only.
 
