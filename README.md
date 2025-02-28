@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/kyechan99/capsule-render">
-    <img src="https://capsule-render.vercel.app/api?type=waving&height=250&color=timeGradient&text=Minecraft%20Java%20Flags&fontAlignY=46&animation=fadeIn">
+    <img src="https://capsule-render.vercel.app/api?type=waving&height=250&color=timeGradient&text=Minecraft%20Java%20Flags&fontAlignY=40&animation=fadeIn">
   </a>
 </div>
 
@@ -16,7 +16,7 @@ Welcome! this is a guide to tune Java for Minecraft.
 <br>
 
 # Performance Mods
-You might be thinking ***"This is weird, why are performance mods here?"*** but performance mods will increase your performance more than any Java flags could, but if you want pure performance, don't just use Optifine. There are better performing mods like [Sodium](https://modrinth.com/mod/sodium). Sodium also supports Fabric natively (unlike Optifine) and the 0.6 beta supports NeoForge aswell.
+You might be thinking ***"This is weird, why are performance mods here?"*** but performance mods will increase your performance more than any Java flags could, but if you want pure performance, don't just use Optifine. There are better performing mods like [Sodium](https://modrinth.com/mod/sodium). Sodium also supports Fabric natively (unlike Optifine) and 0.6 supports NeoForge aswell.
 
 For pure performance, you can take a look at [Simply Optimized](https://modrinth.com/modpack/sop) and [Adrenaline](https://modrinth.com/modpack/adrenaline) for examples.
 
@@ -260,5 +260,3 @@ Linux users can add  `sudo nice -n -10` to the beginning of the launch command.
 - Linux wayland users should research running Minecraft natively on wayland instead of through xwayland.
 
 - Close everything in the background, including Discord, game launchers and your browser! Minecraft is resource intensive, and does not like other apps generating CPU interrupts or eating disk I/O, RAM and so on.
-
-<br/>
