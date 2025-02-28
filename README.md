@@ -51,13 +51,19 @@ Example:
 <br>
 
 # Memory Allocation
-Minimum and maximum memory flags (`-xms` and `-xmx`) should be set to the same value as explained [here](https://dzone.com/articles/benefits-of-setting-initial-and-maximum-memory-siz) with one caveat: if you are on a low-memory system, and Minecraft takes up almost all your RAM, set your minimum memory below your maximum memory to conserve as much as possible. Also try removing these arguments:
-```
--XX:NmethodSweepActivity=1 -XX:ReservedCodeCacheSize=400M -XX:NonNMethodCodeHeapSize=12M -XX:ProfiledCodeHeapSize=194M -XX:NonProfiledCodeHeapSize=194M
-```
- and try server garbage collection arguments.
+Minimum and maximum memory flags (`-xms` and `-xmx`) should be set to the same value as explained [here](https://dzone.com/articles/benefits-of-setting-initial-and-maximum-memory-siz). They are set in both megabytes or gigabytes so `-Xms4096M` and `-Xmx8G` both work.
 
-Sizes are set in megabytes or gigabytes so `-Xms4096M` or `-Xmx8G` are both correct.
+<details>
+  <summary>Low-Memory System where Minecraft takes up almost all your RAM</summary>
+
+Set your minimum memory below your maximum memory to conserve as much as possible. Also try removing these arguments and trying sever garbage collection arguments: 
+- `-XX:NmethodSweepActivity=1`
+- `-XX:ReservedCodeCacheSize=400M`
+- `-XX:NonNMethodCodeHeapSize=12M`
+- `-XX:ProfiledCodeHeapSize=194M`
+- `-XX:NonProfiledCodeHeapSize=194M`
+  
+</details>
 
 > [!NOTE]
 > 1. Allocating too much memory can break garbage collection or just slow Minecraft down, even if you have plenty to spare. Allocating too little can also slow down or break the game. Keep a close eye on Task manager (or your DE's system monitor) as Minecraft is running, and allocate only as much as it needs (which is usually less than 8G). `sparkc gcmonitor` will tell you if your allocation is too high (the pauses will be too long) or too low (frequent GC with a low memory warning in the notification).
