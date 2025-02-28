@@ -232,18 +232,23 @@ No other "threading" flags like `ParallelGCThreads` or `JVMCIThreads` are necess
 
 Enabling large pages improves the performance of Minecraft servers and clients by reducing the load on your system. [Here's a good guide](https://kstefanj.github.io/2021/05/19/large-pages-and-java.html)
 
-> [!NOTE]
-> 1. Windows Home doesn't have `gpedit.msc` and thus, can't follow the guide above, intead use [this guide](https://awesomeprojectsxyz.blogspot.com/2017/11/windows-10-home-how-to-enable-lock.html?m=1), also since microsoft took down the tool in mention, you have to download it from [here](https://gist.github.com/eyecatchup/0107bab3d92473cb8a3d3547848fc442).
-> 
-> 2. On Linux, you generally want to use `-XX:+UseTransparentHugePages`.
-
-Add `-XX:+UseLargePages -XX:LargePageSizeInBytes=2m` to your arguments.
+Add:
+```
+-XX:+UseLargePages -XX:LargePageSizeInBytes=2m
+```
 
 Check and see if large pages is working with the `-Xlog:gc+init` java argument in Java 17. 
 
 In any Java version/platform, if large pages isn't working, you will get a warning in the log similar to this: 
 
-`Java HotSpot(TM) 64-Bit Server VM warning: JVM cannot use large page memory because it does not have enough privilege to lock pages in memory.`
+```
+Java HotSpot(TM) 64-Bit Server VM warning: JVM cannot use large page memory because it does not have enough privilege to lock pages in memory.
+```
+
+> [!NOTE]
+> 1. Windows Home doesn't have `gpedit.msc` and thus, can't follow the guide above, intead use [this guide](https://awesomeprojectsxyz.blogspot.com/2017/11/windows-10-home-how-to-enable-lock.html?m=1), also since microsoft took down the tool in mention, you have to download it from [here](https://gist.github.com/eyecatchup/0107bab3d92473cb8a3d3547848fc442).
+> 
+> 2. On Linux, you generally want to use `-XX:+UseTransparentHugePages`.
 
 <br/>
 
