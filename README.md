@@ -304,3 +304,6 @@ Linux users can add  `sudo nice -n -10` to the beginning of the launch command.
 - Linux wayland users should research running Minecraft natively on wayland instead of through xwayland.
 
 - Close everything in the background, including Discord, game launchers and your browser! Minecraft is resource intensive, and does not like other apps generating CPU interrupts or eating disk I/O, RAM and so on.
+
+# Credits
+- https://github.com/MeowIce/meowice-flags
