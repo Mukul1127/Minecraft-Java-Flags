@@ -125,6 +125,9 @@ Though make sure to set `-Dgraal.VectorizeSIMD` to `false` if you run shaders as
 -Dgraal.UsePriorityInlining=true -Dgraal.Vectorization=true -Dgraal.OptDuplication=true -Dgraal.DetectInvertedLoopsAsCounted=true  -Dgraal.LoopInversion=true -Dgraal.VectorizeHashes=true -Dgraal.EnterprisePartialUnroll=true -Dgraal.VectorizeSIMD=true -Dgraal.StripMineNonCountedLoops=true  -Dgraal.SpeculativeGuardMovement=true -Dgraal.TuneInlinerExploration=1 -Dgraal.LoopRotation=true -Dgraal.OptWriteMotion=true -Dgraal.CompilerConfiguration=enterprise
 ```
 
+> ![!NOTE]
+> Not all flags may be recognized by the JVM. You can just remove the problematic flags.
+
 </details>
 
 <details>
