@@ -8,6 +8,11 @@
 
 Welcome! this is a guide to tune Java for Minecraft.
 
+> [!IMPORTANT]  
+> Most of these flags seem to be snake-oil, more information here: https://garden.unascribed.com/jvm-args/
+> 
+> Community testng would be appreciated to confirm this, especially on lower-end hardware.
+
 > [!NOTE]
 > 1. While these tweaks notably reduce some server and client stutters, expect only modest TPS gains + minimal FPS gains at best, and somewhat increased RAM + CPU usage.
 > 
