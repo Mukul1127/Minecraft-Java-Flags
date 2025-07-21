@@ -314,7 +314,7 @@ Linux users can add  `sudo nice -n -10` to the beginning of the launch command.
 <br/>
 
 # Other Performance Tips
-- Run Minecraft on Linux! In pretty much every scenario it runs very good, for servers, Clear Linux and RHEL are very well optimized, and for clients, CachyOS/Arch is amazing.
+- Run Minecraft on Linux! In pretty much every scenario it runs very good, for servers, RHEL is very well optimized, and for clients, CachyOS/Arch is amazing.
 
 - Make sure the Minecraft client is using your discrete GPU! Check the F3 tab, and force Minecraft to use it in the "**Windows Graphics Settings**", *not* the AMD/Nvidia control panel (as they don't seem to work anymore).
 
