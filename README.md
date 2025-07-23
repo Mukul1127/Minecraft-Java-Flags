@@ -190,10 +190,16 @@ Generational ZGC is great for high memory/high core count servers and is made to
 
 <br/>
 
-### Shenandoah
-Shenandoah performs well on clients, but kills server throughput. Enable it with 
+### Incremental Update Shenandoah
+Incremental Update Shenandoah performs well on clients, but kills server throughput. Enable it with 
 ```
 -XX:+UseShenandoahGC -XX:ShenandoahGCMode=iu -XX:ShenandoahGuaranteedGCInterval=1000000 -XX:AllocatePrefetchStyle=1
+```
+
+### Generational Shenandoah
+Generational Shenandoah is an experimental mode for Shenandoah, it can bring performance gains. Enable it with 
+```
+-XX:+UseShenandoahGC -XX:ShenandoahGCMode=generational -XX:ShenandoahGuaranteedGCInterval=1000000 -XX:AllocatePrefetchStyle=1
 ```
 
 See more tuning options [here](https://wiki.openjdk.org/display/shenandoah/Main). The "herustic" and "mode" options don't change much (except for "compact," which you should not use). 
